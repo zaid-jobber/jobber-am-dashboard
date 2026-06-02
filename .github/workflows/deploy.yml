@@ -19,20 +19,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
-          cache-dependency-path: am-hub/pnpm-lock.yaml
+      # Build with npm — no pnpm/workspace config to trip over, and esbuild's
+      # binary installs normally. Resolves from package.json.
       - name: Install
         working-directory: am-hub
-        run: pnpm install --no-frozen-lockfile
+        run: npm install --no-audit --no-fund
       - name: Build (subpath base for Pages)
         working-directory: am-hub
-        run: pnpm build --base=/jobber-am-dashboard/
+        run: npm run build -- --base=/jobber-am-dashboard/
       - name: SPA fallback + Jekyll off
         working-directory: am-hub/dist
         run: |
