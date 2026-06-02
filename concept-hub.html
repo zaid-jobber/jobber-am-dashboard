@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jobber AM Hub — Hub (refined)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  :root{
+    --navy:#012939;--beige:#F2F0EA;--lime:#A8E300;--green:hsl(107,58%,33%);
+    --text:hsl(198,30%,18%);--muted:hsl(197,16%,52%);--border:hsl(200,15%,90%);
+    --surface:#ffffff;--card-r:24px;--rain:#2b7bb9;
+    --shadow:0 8px 30px rgba(1,41,57,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--text);font-size:14px;line-height:1.5;
+    -webkit-font-smoothing:antialiased;font-feature-settings:"tnum" 1;
+    background:
+      radial-gradient(1100px 640px at 90% 96%, rgba(168,227,0,.16), transparent 60%),
+      radial-gradient(800px 520px at 2% 2%, rgba(255,255,255,.85), transparent 55%),
+      linear-gradient(150deg,#EFEDE6 0%,#F5F3ED 48%,#F1F3E8 100%);
+    min-height:100vh;}
+  .wrap{max-width:1320px;margin:0 auto;padding:20px 30px 52px}
+  .num{font-variant-numeric:tabular-nums}
+  [data-lucide]{width:18px;height:18px;stroke-width:1.75}
+
+  /* ---- nav ---- */
+  .nav{display:flex;align-items:center;gap:16px;margin-bottom:32px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px;color:var(--navy);background:rgba(255,255,255,.75);border:1px solid var(--border);padding:9px 16px 9px 10px;border-radius:30px}
+  .logo .mk{width:26px;height:26px;border-radius:8px;background:var(--navy);color:var(--lime);display:grid;place-items:center;font-size:13px;font-weight:800}
+  .pillnav{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.75);border:1px solid var(--border);border-radius:32px;padding:5px;margin:0 auto}
+  .pillnav a{text-decoration:none;color:var(--muted);font-weight:600;font-size:13.5px;padding:9px 18px;border-radius:26px;transition:.15s}
+  .pillnav a:hover{color:var(--text)}
+  .pillnav a.active{background:var(--navy);color:#fff}
+  .navicons{display:flex;align-items:center;gap:10px}
+  .ic-btn{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.85);border:1px solid var(--border);display:grid;place-items:center;color:var(--navy);position:relative;cursor:pointer}
+  .ic-btn:hover{border-color:var(--navy)}
+  .ic-btn.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .ic-btn .nub{position:absolute;top:9px;right:10px;width:8px;height:8px;border-radius:50%;background:var(--lime);border:2px solid #fff}
+  .ava{width:42px;height:42px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px}
+
+  /* ---- header ---- */
+  .hello{font-size:42px;font-weight:800;letter-spacing:-1.2px;color:var(--navy);margin:4px 0 4px}
+  .sub{color:var(--muted);font-size:14.5px;font-weight:500;margin-bottom:24px}
+  .sub b{color:var(--text);font-weight:700}
+
+  /* ---- customize bar (hidden until edit) ---- */
+  .editbar{display:none;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:12px 16px;margin-bottom:18px;box-shadow:var(--shadow);flex-wrap:wrap}
+  body.editing .editbar{display:flex}
+  .editbar .et{font-size:13.5px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:8px}
+  .editbar .hint{font-size:12px;color:var(--muted)}
+  .editbar .tiles{display:flex;gap:7px;flex-wrap:wrap}
+  .tlchip{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;border:1px solid var(--border);background:#fff;border-radius:30px;padding:6px 11px;color:var(--text);cursor:pointer}
+  .tlchip [data-lucide]{width:14px;height:14px}
+  .tlchip.add{border-style:dashed;color:var(--muted)}
+  .editbar .done{margin-left:auto;border:0;background:var(--navy);color:#fff;border-radius:12px;padding:9px 16px;font-weight:700;font-size:12.5px;cursor:pointer}
+
+  /* ---- target hero ---- */
+  .targetcard{background:var(--surface);border:1px solid rgba(255,255,255,.7);border-radius:var(--card-r);box-shadow:var(--shadow);padding:24px 26px;margin-bottom:16px;position:relative}
+  .tc-top{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .tc-l .lbl{font-size:12px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:7px}
+  .tc-l .big{font-size:44px;font-weight:800;letter-spacing:-1.5px;color:var(--navy);line-height:1;margin-top:6px}
+  .tc-l .big span{font-size:20px;color:var(--muted);font-weight:700}
+  .tc-r{display:flex;gap:26px}
+  .kpi{text-align:right}
+  .kpi .k{font-size:11.5px;font-weight:600;color:var(--muted)}
+  .kpi .v{font-size:20px;font-weight:800;color:var(--navy);margin-top:2px}
+  .kpi .v.warn{color:#c0392b}
+  .barwrap{margin-top:22px;position:relative}
+  .seg-bar{height:16px;border-radius:10px;background:#EFEEE8;overflow:hidden;display:flex}
+  .seg-bar .s1{background:var(--green)}
+  .seg-bar .s2{background:var(--lime)}
+  .floor{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--navy);opacity:.45}
+  .floor .tick{position:absolute;top:-18px;left:-14px;font-size:10px;font-weight:700;color:var(--navy);white-space:nowrap}
+  .barlegend{display:flex;gap:18px;margin-top:12px;font-size:12px;color:var(--muted);font-weight:600}
+  .barlegend .d{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px;vertical-align:middle}
+  .barlegend .d.g{background:var(--green)}.barlegend .d.l{background:var(--lime)}
+  .barlegend b{color:var(--text)}
+
+  /* daily goal pills */
+  .goals{display:flex;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+  .goalpill{flex:1;min-width:150px;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:13px 16px;box-shadow:0 4px 16px rgba(1,41,57,.04)}
+  .goalpill .gt{display:flex;align-items:center;justify-content:space-between}
+  .goalpill .gl{font-size:12.5px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:7px}
+  .goalpill .gl [data-lucide]{width:15px;height:15px}
+  .goalpill .gv{font-size:15px;font-weight:800;color:var(--navy)}
+  .goalpill .gv i{font-style:normal;color:var(--muted);font-weight:600;font-size:12px}
+  .goalpill .gbar{height:6px;border-radius:6px;background:#EFEEE8;margin-top:9px;overflow:hidden}
+  .goalpill .gbar>i{display:block;height:100%;border-radius:6px;background:var(--navy)}
+  .goalpill .gbar>i.lime{background:var(--lime)}.goalpill .gbar>i.green{background:var(--green)}
+
+  /* ---- grid ---- */
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+  .card{background:var(--surface);border-radius:var(--card-r);padding:22px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.7);position:relative}
+  .card.tint{background:linear-gradient(160deg,#FBFAF6,#F4F5EC)}
+  .c4{grid-column:span 4}.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c8{grid-column:span 8}
+  .ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:10px}
+  .ch .htitle{display:flex;align-items:center;gap:9px;min-width:0}
+  .ch .htitle .hic{width:32px;height:32px;border-radius:10px;background:#F4F5EC;display:grid;place-items:center;color:var(--navy);flex:none}
+  .ch h3{margin:0;font-size:16px;font-weight:700;letter-spacing:-.3px;white-space:nowrap}
+  .src{font-size:11px;font-weight:600;color:var(--muted);background:#F4F5EC;border:1px solid var(--border);padding:3px 9px;border-radius:20px;white-space:nowrap}
+  .go{width:34px;height:34px;border-radius:50%;background:#fff;border:1px solid var(--border);display:grid;place-items:center;color:var(--navy);text-decoration:none;flex:none}
+
+  /* per-tile edit controls */
+  .tctl{display:none;position:absolute;top:14px;right:14px;align-items:center;gap:7px;z-index:3}
+  body.editing .tctl{display:flex}
+  body.editing .card .go{visibility:hidden}
+  body.editing .card{outline:2px dashed var(--border);outline-offset:3px;cursor:grab}
+  .tctl .grip{color:var(--muted);display:grid;place-items:center}
+  .tctl .rm{width:28px;height:28px;border-radius:9px;border:1px solid #f0c9c2;background:#fff;display:grid;place-items:center;color:#c0392b;cursor:pointer}
+  .tctl .rm [data-lucide]{width:15px;height:15px}
+  .addtilecard{display:none;border:2px dashed var(--border);border-radius:var(--card-r);background:rgba(255,255,255,.4);flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:150px;color:var(--muted);cursor:pointer;font-weight:700;font-size:13px}
+  body.editing .addtilecard{display:flex}
+  .addtilecard [data-lucide]{width:26px;height:26px}
+
+  /* slack */
+  .slk{list-style:none;margin:0;padding:0}
+  .slk li{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px solid #F2F1EA}
+  .slk li:last-child{border-bottom:0}
+  .slk .si2{width:36px;height:36px;border-radius:11px;background:#F4F5EC;display:grid;place-items:center;color:var(--navy);flex:none}
+  .slk .si2.warn{background:#FBEEE9;color:#c0392b}.slk .si2.lead{background:#EAF6EE;color:var(--green)}
+  .slk .st{flex:1;min-width:0}
+  .slk .st .ch2{color:var(--green);font-size:11.5px;font-weight:700}
+  .slk .st b{font-weight:700;font-size:13.5px;display:block;color:var(--text);line-height:1.35}
+  .slk .st span{color:var(--muted);font-size:12px}
+  .slk .when{color:var(--muted);font-size:11px;font-weight:600;white-space:nowrap;flex:none}
+
+  /* weather */
+  .wx-lead{display:flex;align-items:center;gap:13px;background:#EAF3FB;border-radius:14px;padding:13px 15px;color:#1b5a82;font-weight:600;font-size:13px;margin-bottom:14px}
+  .wx-lead [data-lucide]{width:24px;height:24px;flex:none;color:var(--rain)}
+  .wx-row{display:flex;gap:9px}
+  .wx{flex:1;text-align:center;border-radius:14px;padding:14px 6px;background:#FAFAF7;border:1px solid var(--border)}
+  .wx.hot{background:#EAF3FB;border-color:#cfe4f3}
+  .wx .z{font-size:11px;font-weight:700;color:var(--muted)}
+  .wx [data-lucide]{width:22px;height:22px;margin:6px 0;color:var(--navy)}
+  .wx.hot [data-lucide]{color:var(--rain)}
+  .wx .t{font-size:15px;font-weight:800;color:var(--navy)}
+  .wx-targets{display:flex;gap:10px;margin-top:14px}
+  .wxt{flex:1;background:#F4F8EC;border:1px solid #dfeebf;border-radius:14px;padding:12px 14px;font-size:12px;color:#3f5a1e;font-weight:600;display:flex;align-items:center;gap:11px}
+  .wxt [data-lucide]{width:18px;height:18px;color:var(--green);flex:none}
+  .wxt b{font-size:19px;color:var(--navy);font-weight:800;display:block;line-height:1}
+  .wxt .wl{font-size:11.5px}
+
+  /* recent / lists */
+  .rc{list-style:none;margin:0;padding:0}
+  .rc li{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #F2F1EA}
+  .rc li:last-child{border-bottom:0}
+  .rc .ri{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;flex:none}
+  .ri.a{background:#FBEEE9;color:#c0392b}.ri.b{background:#FFF4E2;color:#cf8a1f}.ri.c{background:#EAF6EE;color:var(--green)}.ri.d{background:#EFEAFB;color:#7b3fa0}
+  .rc .rt{flex:1;min-width:0}.rc .rt b{font-weight:700;font-size:13.5px;display:block}.rc .rt span{color:var(--muted);font-size:12px}
+  .rc .rtag{font-size:11px;font-weight:700;color:var(--muted);white-space:nowrap}
+
+  /* timeline */
+  .tl{display:flex;flex-direction:column;gap:2px}
+  .tl .row{display:flex;gap:16px;align-items:flex-start;padding:9px 0;border-top:1px solid #F2F1EA}
+  .tl .row:first-child{border-top:0}
+  .tl .tm{font-size:12px;color:var(--muted);font-weight:700;width:58px;flex:none;padding-top:11px}
+  .tl .ev{flex:1;border-radius:14px;padding:11px 15px;font-weight:600;font-size:13px}
+  .tl .ev small{display:block;font-weight:500;font-size:11.5px;margin-top:2px}
+  .tl .ev.navy{background:var(--navy);color:#fff}.tl .ev.navy small{color:#9fc0cf}
+  .tl .ev.soft{background:#F5F4EE;color:var(--text)}.tl .ev.soft small{color:var(--muted)}
+  .tl .ev.lime{background:#EEF7D6;color:var(--navy)}.tl .ev.lime small{color:#5f7a2e}
+
+  /* mail */
+  .mail{list-style:none;margin:0;padding:0}
+  .mail li{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #F2F1EA}
+  .mail li:last-child{border-bottom:0}
+  .mail .mav{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff;flex:none}
+  .mav.g1{background:#3b7a57}.mav.g2{background:#b5642e}.mav.g3{background:#3a5c8a}
+  .mail .mt{flex:1;min-width:0}.mail .mt b{font-weight:700;font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mail .mt span{color:var(--muted);font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mail .mw{color:var(--muted);font-size:11px;font-weight:600;white-space:nowrap;flex:none;display:flex;align-items:center;gap:5px}
+  .mail .unread{width:8px;height:8px;border-radius:50%;background:var(--green)}
+  .mail [data-lucide].star{width:14px;height:14px;color:var(--lime)}
+
+  /* week bars */
+  .bars{display:flex;align-items:flex-end;gap:12px;height:130px;margin-top:4px}
+  .bars .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;justify-content:flex-end;height:100%}
+  .bars .bk{width:10px;border-radius:8px;background:var(--navy)}
+  .bars .col.hot .bk{background:var(--lime)}
+  .bars .dy{font-size:11px;color:var(--muted);font-weight:600}
+  .bars .tip{background:var(--lime);color:var(--navy);font-size:11px;font-weight:800;padding:3px 8px;border-radius:20px}
+
+  .foot{margin-top:26px;color:var(--muted);font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- NAV -->
+  <div class="nav">
+    <div class="logo"><span class="mk">J</span> AM Hub</div>
+    <nav class="pillnav">
+      <a class="active" href="#">Hub</a>
+      <a href="#">Activity List</a>
+      <a href="#">Pipeline</a>
+      <a href="#">Performance</a>
+      <a href="#">Promos</a>
+      <a href="#">Development</a>
+    </nav>
+    <div class="navicons">
+      <div class="ic-btn" id="editBtn" title="Customize layout"><i data-lucide="layout-grid"></i></div>
+      <div class="ic-btn" title="Settings"><i data-lucide="settings"></i></div>
+      <div class="ic-btn" title="Notifications"><i data-lucide="bell"></i><span class="nub"></span></div>
+      <div class="ava">ZF</div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <div class="hello">Good morning, Zaid</div>
+  <div class="sub">Saturday, May 31 · <b>1 selling day left</b> this month</div>
+
+  <!-- CUSTOMIZE BAR (revealed by the layout icon) -->
+  <div class="editbar">
+    <span class="et"><i data-lucide="layout-grid"></i> Customize your Hub</span>
+    <span class="hint">Drag to rearrange, remove or add tiles</span>
+    <span class="tiles">
+      <span class="tlchip add"><i data-lucide="plus"></i> Leaderboard</span>
+      <span class="tlchip add"><i data-lucide="plus"></i> Commission tracker</span>
+      <span class="tlchip add"><i data-lucide="plus"></i> Trials ending</span>
+      <span class="tlchip add"><i data-lucide="plus"></i> Tasks &amp; follow-ups</span>
+      <span class="tlchip add"><i data-lucide="plus"></i> Recent wins</span>
+      <span class="tlchip add"><i data-lucide="plus"></i> Promos &amp; experiments</span>
+      <span class="tlchip add"><i data-lucide="plus"></i> Intercom queue</span>
+      <span class="tlchip add"><i data-lucide="plus"></i> Notes</span>
+    </span>
+    <button class="done" id="doneBtn">Done</button>
+  </div>
+
+  <!-- MONTHLY TARGET HERO -->
+  <div class="targetcard">
+    <div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div>
+    <div class="tc-top">
+      <div class="tc-l">
+        <div class="lbl"><i data-lucide="target"></i> Total Expansion Revenue · monthly target</div>
+        <div class="big num">78%<span> to goal</span></div>
+      </div>
+      <div class="tc-r">
+        <div class="kpi"><div class="k">Upgrade MRR</div><div class="v num">$2.1k <span style="font-size:12px;color:var(--muted)">/ $2.5k</span></div></div>
+        <div class="kpi"><div class="k">JPay PGPV</div><div class="v warn num">$41k <span style="font-size:12px;color:var(--muted)">/ $57k</span></div></div>
+        <div class="kpi"><div class="k">Win rate</div><div class="v num">38%</div></div>
+      </div>
+    </div>
+    <div class="barwrap">
+      <div class="seg-bar">
+        <div class="s1" style="width:46%"></div>
+        <div class="s2" style="width:32%"></div>
+      </div>
+      <div class="floor" style="left:75%"><span class="tick">75% floor</span></div>
+      <div class="barlegend">
+        <span><span class="d g"></span>Upgrade MRR <b>46%</b></span>
+        <span><span class="d l"></span>JPay PGPV <b>32%</b></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAILY GOAL PILLS -->
+  <div class="goals">
+    <div class="goalpill"><div class="gt"><span class="gl"><i data-lucide="phone"></i> Dials</span><span class="gv num">28<i> /40</i></span></div><div class="gbar"><i style="width:70%"></i></div></div>
+    <div class="goalpill"><div class="gt"><span class="gl"><i data-lucide="message-square"></i> SMS</span><span class="gv num">14<i> /20</i></span></div><div class="gbar"><i class="lime" style="width:70%"></i></div></div>
+    <div class="goalpill"><div class="gt"><span class="gl"><i data-lucide="clock"></i> Talk time</span><span class="gv num">52<i> /90m</i></span></div><div class="gbar"><i style="width:58%"></i></div></div>
+    <div class="goalpill"><div class="gt"><span class="gl"><i data-lucide="git-pull-request-arrow"></i> Opps</span><span class="gv num">5<i> /8</i></span></div><div class="gbar"><i class="green" style="width:62%"></i></div></div>
+  </div>
+
+  <!-- ACTIVE SPIF -->
+  <div class="card" style="display:flex;align-items:center;gap:15px;padding:16px 20px;margin-bottom:16px;background:linear-gradient(120deg,#F4F8EC,#EEF7D6);border-color:#dfeebf">
+    <div style="width:42px;height:42px;border-radius:12px;background:var(--lime);color:var(--navy);display:grid;place-items:center;flex:none"><i data-lucide="zap"></i></div>
+    <div><b style="font-weight:800;color:var(--navy)">May SPIF · JPay enablements</b><div style="color:#3f5a1e;font-size:12.5px;font-weight:600">$250 + leaderboard · ends today · 4 to go</div></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:16px">
+      <b class="num" style="font-size:22px;font-weight:800;color:var(--navy)">6/10</b>
+      <div style="width:150px;height:10px;border-radius:6px;background:#fff;overflow:hidden;border:1px solid #dfeebf"><i style="display:block;height:100%;width:60%;background:var(--lime)"></i></div>
+      <a href="#" style="background:var(--navy);color:#fff;border-radius:12px;padding:9px 14px;font-weight:700;font-size:12.5px;text-decoration:none;white-space:nowrap">JPay accounts</a>
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div class="grid">
+
+    <!-- SLACK -->
+    <div class="card c4">
+      <div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div>
+      <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="slack"></i></span><h3>Slack</h3></div><a class="go" href="#"><i data-lucide="arrow-up-right"></i></a></div>
+      <ul class="slk">
+        <li><span class="si2 lead"><i data-lucide="target"></i></span><div class="st"><span class="ch2">#sales-critical</span><b>Lead routed to you — Apex HVAC</b><span>@expansion-team · wants to discuss upgrade</span></div><span class="when">7:05a</span></li>
+        <li><span class="si2 warn"><i data-lucide="alert-triangle"></i></span><div class="st"><span class="ch2">#war_room</span><b>Payments deposit delay — resolved</b><span>Affected JPay accounts this AM</span></div><span class="when">6:50a</span></li>
+        <li><span class="si2"><i data-lucide="megaphone"></i></span><div class="st"><span class="ch2">#announce-product_updates</span><b>AI Receptionist now GA on Plus</b><span>New Grow → Plus angle</span></div><span class="when">Yest</span></li>
+        <li><span class="si2"><i data-lucide="trophy"></i></span><div class="st"><span class="ch2">#announce-expansion</span><b>May leaderboard — you're #3</b><span>+ new Promos &amp; Experiments canvas</span></div><span class="when">Yest</span></li>
+      </ul>
+    </div>
+
+    <!-- WEATHER -->
+    <div class="card tint c8">
+      <div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div>
+      <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="cloud-sun"></i></span><h3>Weather &amp; call timing</h3></div><a class="go" href="#"><i data-lucide="arrow-up-right"></i></a></div>
+      <div class="wx-lead"><i data-lucide="cloud-rain"></i><div>Raining in <b>ET</b> &amp; <b>CT</b> — a prime day to call your <b>landscaping &amp; irrigation</b> accounts (18 in your book)</div></div>
+      <div class="wx-row">
+        <div class="wx hot"><div class="z">ET</div><i data-lucide="cloud-rain"></i><div class="t">54°</div></div>
+        <div class="wx hot"><div class="z">CT</div><i data-lucide="cloud-rain"></i><div class="t">58°</div></div>
+        <div class="wx"><div class="z">MT</div><i data-lucide="cloud"></i><div class="t">61°</div></div>
+        <div class="wx"><div class="z">PT</div><i data-lucide="sun"></i><div class="t">67°</div></div>
+        <div class="wx hot"><div class="z">AT</div><i data-lucide="cloud-rain"></i><div class="t">49°</div></div>
+      </div>
+      <div class="wx-targets">
+        <div class="wxt"><i data-lucide="sprout"></i><div><b>9</b><span class="wl">ET landscaping</span></div></div>
+        <div class="wxt"><i data-lucide="droplets"></i><div><b>6</b><span class="wl">CT irrigation</span></div></div>
+        <div class="wxt"><i data-lucide="scissors"></i><div><b>3</b><span class="wl">AT lawn care</span></div></div>
+        <div class="wxt" style="background:var(--navy);border-color:var(--navy);color:#fff"><i data-lucide="list-checks" style="color:var(--lime)"></i><div><b style="color:#fff">18</b><span class="wl" style="color:#9fc0cf">bumped up your list</span></div></div>
+      </div>
+    </div>
+
+    <!-- RECENT CHANGES -->
+    <div class="card c5">
+      <div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div>
+      <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="activity"></i></span><h3>Recent account changes</h3></div><a class="go" href="#"><i data-lucide="arrow-up-right"></i></a></div>
+      <ul class="rc">
+        <li><span class="ri a"><i data-lucide="alert-triangle"></i></span><div class="rt"><b>Greenline Landscaping</b><span>Grace period — auto-upgrade in 5d · GSV ↑ 22%</span></div><span class="rtag">2h</span></li>
+        <li><span class="ri b"><i data-lucide="clock"></i></span><div class="rt"><b>Apex HVAC</b><span>Grow trial started — ends in 2 days</span></div><span class="rtag">5h</span></li>
+        <li><span class="ri c"><i data-lucide="credit-card"></i></span><div class="rt"><b>Coastal Painting</b><span>JPay status → Verifying · first deposit pending</span></div><span class="rtag">1d</span></li>
+        <li><span class="ri d"><i data-lucide="sparkles"></i></span><div class="rt"><b>Northside Cleaning</b><span>NBA flag → Grow (top 10% this month)</span></div><span class="rtag">1d</span></li>
+      </ul>
+    </div>
+
+    <!-- SCHEDULE -->
+    <div class="card c7">
+      <div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div>
+      <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="calendar"></i></span><h3>Today's schedule</h3><span class="src">Google Calendar</span></div><a class="go" href="#"><i data-lucide="arrow-up-right"></i></a></div>
+      <div class="tl">
+        <div class="row"><div class="tm">9:00a</div><div class="ev navy">Upgrade call — Riverside Turf<small>Connect → Grow · Advanced Quoting</small></div></div>
+        <div class="row"><div class="tm">11:00a</div><div class="ev soft">Team pipeline sync<small>Busy — no calls scheduled here</small></div></div>
+        <div class="row"><div class="tm">1:30p</div><div class="ev lime">JPay onboarding — Peak Plumbing<small>Hosted onboarding walkthrough</small></div></div>
+      </div>
+    </div>
+
+    <!-- INBOX -->
+    <div class="card c5">
+      <div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div>
+      <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="mail"></i></span><h3>Inbox</h3><span class="src">Gmail · key accounts</span></div><a class="go" href="#"><i data-lucide="arrow-up-right"></i></a></div>
+      <ul class="mail">
+        <li><span class="mav g1">RT</span><div class="mt"><b>Re: Quoting limits on Connect</b><span>Riverside Turf — "hop on a call this week?"</span></div><span class="mw"><span class="unread"></span></span></li>
+        <li><span class="mav g2">PP</span><div class="mt"><b>Payments not depositing?</b><span>Peak Plumbing Co</span></div><span class="mw"><i data-lucide="star" class="star"></i></span></li>
+        <li><span class="mav g3">BH</span><div class="mt"><b>Re: Annual plan pricing</b><span>Bright Home — replied to your quote</span></div><span class="mw">Yest</span></li>
+      </ul>
+    </div>
+
+    <!-- WEEK ACTIVITY -->
+    <div class="card c7">
+      <div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div>
+      <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="bar-chart-3"></i></span><h3>This week's activity</h3><span class="src">Ambition</span></div><a class="go" href="#"><i data-lucide="arrow-up-right"></i></a></div>
+      <div class="bars">
+        <div class="col"><div class="bk" style="height:38%"></div><div class="dy">M</div></div>
+        <div class="col"><div class="bk" style="height:66%"></div><div class="dy">T</div></div>
+        <div class="col"><div class="bk" style="height:52%"></div><div class="dy">W</div></div>
+        <div class="col"><div class="bk" style="height:74%"></div><div class="dy">T</div></div>
+        <div class="col hot"><span class="tip">62%</span><div class="bk" style="height:62%"></div><div class="dy">F</div></div>
+      </div>
+    </div>
+
+    <!-- ADD TILE (only in edit mode) -->
+    <div class="addtilecard c4"><i data-lucide="plus"></i><span>Add a tile</span></div>
+
+  </div>
+
+  <div class="foot"></div>
+</div>
+<script>
+  lucide.createIcons();
+  function toggleEdit(){document.body.classList.toggle('editing');}
+  document.getElementById('editBtn').addEventListener('click',toggleEdit);
+  document.getElementById('doneBtn').addEventListener('click',toggleEdit);
+</script>
+</body>
+</html>

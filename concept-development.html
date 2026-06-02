@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jobber AM Hub — Development</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="concept.css" />
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  .dlayout{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start}
+  .composer{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+  .composer input{flex:1;border:1px solid var(--border);border-radius:14px;padding:13px 15px;font:inherit;font-size:13.5px;background:#fff}
+  .composer .add{border:0;border-radius:13px;background:var(--green);color:#fff;font-weight:800;font-size:13px;padding:0 18px;height:46px;cursor:pointer}
+  .typetabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+  .tt{font-size:11.5px;font-weight:700;border:1px solid var(--border);background:#fff;border-radius:30px;padding:6px 12px;color:var(--muted);cursor:pointer;display:flex;gap:5px;align-items:center}
+  .tt [data-lucide]{width:13px;height:13px}.tt.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .entry{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid #F2F1EA}
+  .entry:last-child{border-bottom:0}
+  .eico{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;flex:none}
+  .eico.win{background:#EAF6EE;color:var(--green)}.eico.coach{background:#EFEAFB;color:#7b3fa0}.eico.oneone{background:#E8F0FC;color:#2b6cb0}.eico.learn{background:#FFF4E2;color:#cf8a1f}.eico.goal{background:#F4F8EC;color:var(--green)}
+  .eico [data-lucide]{width:18px;height:18px}
+  .ebody{flex:1}
+  .ebody .etop{display:flex;align-items:center;gap:8px;margin-bottom:3px}
+  .etag{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
+  .ebody .ed{margin-left:auto;font-size:11px;color:var(--muted);font-weight:600}
+  .ebody b{font-weight:700;font-size:14px;color:var(--navy);display:block}
+  .ebody p{margin:3px 0 0;font-size:13px;color:var(--text);line-height:1.5}
+  /* right rail */
+  .mini{margin-bottom:16px}
+  .goal-i{padding:11px 0;border-bottom:1px solid #F2F1EA}.goal-i:last-child{border-bottom:0}
+  .goal-i .gt{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--navy);margin-bottom:7px}
+  .goal-i .gt span{color:var(--muted);font-weight:600;font-size:12px}
+  .gtrack{height:8px;border-radius:6px;background:#F4F5EC;overflow:hidden}.gtrack>i{display:block;height:100%;border-radius:6px;background:var(--green)}
+  .comp{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F2F1EA}.comp:last-child{border-bottom:0}
+  .comp .cn{flex:1;font-size:13px;font-weight:600}
+  .dots{display:flex;gap:4px}.dots i{width:9px;height:9px;border-radius:50%;background:#E4E6DD}.dots i.on{background:var(--green)}
+  .ones{display:flex;align-items:center;gap:11px;padding:10px 0;border-bottom:1px solid #F2F1EA}.ones:last-child{border-bottom:0}
+  .ones .od{width:42px;height:42px;border-radius:12px;background:#F4F5EC;display:grid;place-items:center;flex:none;font-weight:800;color:var(--navy);font-size:11px;line-height:1.05;text-align:center}
+  .ones .ot b{font-size:13px;font-weight:700}.ones .ot span{color:var(--muted);font-size:12px}
+  .focus{display:flex;gap:11px;align-items:flex-start;background:#F4F8EC;border:1px solid #dfeebf;border-radius:14px;padding:12px 14px}
+  .focus [data-lucide]{width:18px;height:18px;color:var(--green);flex:none;margin-top:1px}
+  .focus b{color:#2f4717}.focus p{margin:2px 0 0;font-size:12.5px;color:#3f5a1e}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="nav">
+    <div class="logo"><span class="mk">J</span> AM Hub</div>
+    <nav class="pillnav">
+      <a href="#">Hub</a><a href="#">Activity List</a><a href="#">Pipeline</a><a href="#">Performance</a><a href="#">Promos</a><a class="active" href="#">Development</a>
+    </nav>
+    <div class="navicons">
+      <div class="ic-btn"><i data-lucide="settings"></i></div>
+      <div class="ic-btn"><i data-lucide="bell"></i><span class="nub"></span></div>
+      <div class="ava">ZF</div>
+    </div>
+  </div>
+
+  <div class="pagehead"><div><h1>Development</h1><p>Your journal, goals &amp; coaching</p></div></div>
+
+  <div class="dlayout">
+
+    <!-- JOURNAL -->
+    <div class="card" style="padding:22px">
+      <div class="composer">
+        <input placeholder="Log a win, learning, coaching note or reflection…" />
+        <button class="add">Add</button>
+      </div>
+      <div class="typetabs">
+        <span class="tt on"><i data-lucide="layers"></i> All</span>
+        <span class="tt"><i data-lucide="trophy"></i> Wins</span>
+        <span class="tt"><i data-lucide="headphones"></i> Coaching</span>
+        <span class="tt"><i data-lucide="users"></i> 1:1</span>
+        <span class="tt"><i data-lucide="lightbulb"></i> Learnings</span>
+        <span class="tt"><i data-lucide="target"></i> Goals</span>
+      </div>
+
+      <div class="entry">
+        <div class="eico win"><i data-lucide="trophy"></i></div>
+        <div class="ebody"><div class="etop"><span class="etag">Win</span><span class="ed">Today</span></div><b>Closed Summit Roofing → Grow (ACBM, +$180)</b><p>Two-Way SMS demo sealed it. ACBM framing worked — monthly felt expensive to them.</p></div>
+      </div>
+      <div class="entry">
+        <div class="eico learn"><i data-lucide="lightbulb"></i></div>
+        <div class="ebody"><div class="etop"><span class="etag">Learning</span><span class="ed">Yest</span></div><b>Leading with pricing too early on JPay calls</b><p>Lost Coastal's attention by quoting fees before value. Next time: economic impact first, rate review only if they push.</p></div>
+      </div>
+      <div class="entry">
+        <div class="eico oneone"><i data-lucide="users"></i></div>
+        <div class="ebody"><div class="etop"><span class="etag">1:1 · S. Walker</span><span class="ed">Mon</span></div><b>Focus: lift JPay close rate from 33%</b><p>Action — shadow 2 of Louis's JPay calls this week; use the rate-review tool earlier.</p></div>
+      </div>
+      <div class="entry">
+        <div class="eico coach"><i data-lucide="headphones"></i></div>
+        <div class="ebody"><div class="etop"><span class="etag">Call coaching</span><span class="ed">Tue</span></div><b>Discovery talk ratio 61% — too high</b><p>Aim for ~46/54. Ask 11–14 questions; let silences sit after pricing.</p></div>
+      </div>
+      <div class="entry">
+        <div class="eico goal"><i data-lucide="target"></i></div>
+        <div class="ebody"><div class="etop"><span class="etag">Goal</span><span class="ed">May 1</span></div><b>Hit 100% of annualized quota → Peak Performers</b><p>Both KPIs ≥75%. JPay PGPV is the gap.</p></div>
+      </div>
+    </div>
+
+    <!-- RIGHT RAIL -->
+    <div>
+      <div class="card mini" style="padding:22px">
+        <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="target"></i></span><h3>Goals</h3></div></div>
+        <div class="goal-i"><div class="gt">Annualized quota <span>78%</span></div><div class="gtrack"><i style="width:78%"></i></div></div>
+        <div class="goal-i"><div class="gt">JPay close rate <span>33% → 45%</span></div><div class="gtrack"><i style="width:55%"></i></div></div>
+        <div class="goal-i"><div class="gt">Talk time / day <span>78 / 90m</span></div><div class="gtrack"><i style="width:87%"></i></div></div>
+      </div>
+
+      <div class="card mini" style="padding:22px">
+        <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="git-branch"></i></span><h3>Competencies</h3></div></div>
+        <div class="comp"><span class="cn">Customer Focus</span><span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div>
+        <div class="comp"><span class="cn">Critical Thinking</span><span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div>
+        <div class="comp"><span class="cn">Execution</span><span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div>
+        <div class="comp"><span class="cn">Leadership</span><span class="dots"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></div>
+      </div>
+
+      <div class="card mini" style="padding:22px">
+        <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="users"></i></span><h3>1:1s</h3></div></div>
+        <div class="ones"><div class="od">JUN<br>2</div><div class="ot"><b>Next · S. Walker</b><span>Mon 10:00a</span></div></div>
+        <div class="ones"><div class="od">MAY<br>26</div><div class="ot"><b>JPay focus + shadowing</b><span>Logged ↑</span></div></div>
+      </div>
+
+      <div class="card mini" style="padding:22px">
+        <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="sparkles"></i></span><h3>Suggested focus</h3></div></div>
+        <div class="focus"><i data-lucide="sparkles"></i><div><b>JPay is your gap.</b><p>Close rate 33% vs 58% on trials. From your logs: pricing comes up too early. Try the rate-review tool later.</p></div></div>
+      </div>
+    </div>
+
+  </div>
+  <div class="foot"></div>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

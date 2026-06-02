@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jobber AM Hub — Promos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="concept.css" />
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  .seclab2{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:800;margin:8px 2px 12px;display:flex;align-items:center;gap:8px}
+  .seclab2 .src{text-transform:none;letter-spacing:0}
+  .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:8px}
+  .promo{background:var(--surface);border:1px solid var(--border);border-radius:var(--card-r);padding:20px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .promo.feat{background:linear-gradient(150deg,#0a3a4d,#012939);color:#fff;border:0}
+  .promo .pi{width:38px;height:38px;border-radius:11px;background:#F4F5EC;display:grid;place-items:center;color:var(--navy);margin-bottom:12px}
+  .promo.feat .pi{background:rgba(255,255,255,.12);color:var(--lime)}
+  .promo h3{margin:0 0 4px;font-size:16px;font-weight:800;letter-spacing:-.3px}
+  .promo .terms{font-size:28px;font-weight:800;letter-spacing:-1px;margin:6px 0;color:var(--navy)}
+  .promo.feat .terms{color:#fff}
+  .promo .terms small{font-size:14px;font-weight:700;color:var(--muted)}
+  .promo .elig{font-size:12.5px;color:var(--muted);line-height:1.5}
+  .promo.feat .elig{color:#bcd2da}
+  .promo .ptags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  .pt{font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;background:#F4F5EC;color:var(--muted)}
+  .pt.warn{background:#FBEEE9;color:#c0392b}.pt.code{background:#EAF6EE;color:var(--green);font-family:monospace}
+  .promo.feat .pt{background:rgba(255,255,255,.14);color:#dceaef}
+  .spifbar{display:flex;align-items:center;gap:14px;background:linear-gradient(120deg,#F4F8EC,#EEF7D6);border:1px solid #dfeebf;border-radius:18px;padding:14px 18px;margin-bottom:20px}
+  .spifbar .si{width:40px;height:40px;border-radius:12px;background:var(--lime);color:var(--navy);display:grid;place-items:center;flex:none}
+  .spifbar .st b{font-weight:800;color:var(--navy);font-size:14px}
+  .spifbar .st span{color:#3f5a1e;font-size:12.5px;font-weight:600}
+  .spifbar .prog{margin-left:auto;text-align:right}
+  .spifbar .prog b{font-size:20px;font-weight:800;color:var(--navy)}.spifbar .prog span{font-size:11.5px;color:var(--muted);display:block}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="nav">
+    <div class="logo"><span class="mk">J</span> AM Hub</div>
+    <nav class="pillnav">
+      <a href="#">Hub</a><a href="#">Activity List</a><a href="#">Pipeline</a><a href="#">Performance</a><a class="active" href="#">Promos</a><a href="#">Development</a>
+    </nav>
+    <div class="navicons">
+      <div class="ic-btn"><i data-lucide="settings"></i></div>
+      <div class="ic-btn"><i data-lucide="bell"></i><span class="nub"></span></div>
+      <div class="ava">ZF</div>
+    </div>
+  </div>
+
+  <div class="pagehead"><div><h1>Promos</h1><p>Live offers to close with · synced from Slack &amp; Confluence</p></div></div>
+
+  <!-- active SPIF -->
+  <div class="spifbar">
+    <div class="si"><i data-lucide="zap"></i></div>
+    <div class="st"><b>May SPIF · JPay enablements</b><span>$250 + leaderboard glory · ends today</span></div>
+    <div class="prog"><b>6 / 10</b><span>4 to go</span></div>
+  </div>
+
+  <div class="seclab2">This month <span class="src">· from #announce-expansion canvas</span></div>
+  <div class="pgrid">
+    <div class="promo feat">
+      <div class="pi"><i data-lucide="star"></i></div>
+      <h3>Grow → Plus</h3>
+      <div class="terms">Apr–Jun</div>
+      <div class="elig">Targeted Grow accounts upgrading to Plus. Stacks with annual/ACBM commitment framing.</div>
+      <div class="ptags"><span class="pt">Grow → Plus</span><span class="pt">Seasonal</span></div>
+    </div>
+    <div class="promo">
+      <div class="pi"><i data-lucide="megaphone"></i></div>
+      <h3>Marketing Suite trial</h3>
+      <div class="terms">14 days</div>
+      <div class="elig">Free trial to drive Marketing Suite adds. Pair with the Marketing Suite cadence.</div>
+      <div class="ptags"><span class="pt">Add-on</span></div>
+    </div>
+    <div class="promo">
+      <div class="pi"><i data-lucide="bot"></i></div>
+      <h3>AI Receptionist trial</h3>
+      <div class="terms">14 days</div>
+      <div class="elig">For high call/SMS-volume SPs. Grow→Plus angle.</div>
+      <div class="ptags"><span class="pt">Add-on</span></div>
+    </div>
+  </div>
+
+  <div class="seclab2" style="margin-top:22px">Always-on back-pocket <span class="src">· from Confluence closing tools</span></div>
+  <div class="pgrid">
+    <div class="promo">
+      <div class="pi"><i data-lucide="percent"></i></div>
+      <h3>Monthly / ACBM upgrade</h3>
+      <div class="terms">30%<small> × 3 months</small></div>
+      <div class="elig">Plan upgrades only. Push ACBM over monthly.</div>
+      <div class="ptags"><span class="pt warn">No stacking</span><span class="pt code">expansion_30x3</span></div>
+    </div>
+    <div class="promo">
+      <div class="pi"><i data-lucide="percent"></i></div>
+      <h3>Annual upgrade</h3>
+      <div class="terms">10%<small> × 12 months</small></div>
+      <div class="elig">Best long-term value — lead with this for committed SPs.</div>
+      <div class="ptags"><span class="pt warn">No stacking</span><span class="pt code">expansion_10x12</span></div>
+    </div>
+    <div class="promo">
+      <div class="pi"><i data-lucide="trending-down"></i></div>
+      <h3>Negotiation lever</h3>
+      <div class="terms">40%<small> × 2 months</small></div>
+      <div class="elig">Escalate from 20×3 → 40×2 when interest wanes.</div>
+      <div class="ptags"><span class="pt">Back-pocket</span></div>
+    </div>
+    <div class="promo">
+      <div class="pi"><i data-lucide="maple-leaf"></i></div>
+      <h3>Canadian accounts</h3>
+      <div class="terms">20%<small> × 6 / 12 mo</small></div>
+      <div class="elig">CA only · one-time.</div>
+      <div class="ptags"><span class="pt warn">No stacking</span></div>
+    </div>
+    <div class="promo">
+      <div class="pi"><i data-lucide="credit-card"></i></div>
+      <h3>JPay — ACH cap</h3>
+      <div class="terms">$50<small> / txn</small></div>
+      <div class="elig">Use before discussing anything lower; can match down to $10 cap.</div>
+      <div class="ptags"><span class="pt">JPay</span></div>
+    </div>
+    <div class="promo">
+      <div class="pi"><i data-lucide="square-stack"></i></div>
+      <h3>Two-For</h3>
+      <div class="terms">Sub + card readers</div>
+      <div class="elig">One subscription + one non-subscription tool when upgrading AND enabling JPay.</div>
+      <div class="ptags"><span class="pt">Exception</span></div>
+    </div>
+  </div>
+
+  <div class="foot"></div>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jobber AM Hub — Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="concept.css" />
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  .phero{display:flex;align-items:center;gap:20px;padding:26px;margin-bottom:16px}
+  .pava{width:84px;height:84px;border-radius:26px;background:var(--green);color:#fff;display:grid;place-items:center;font-size:30px;font-weight:800;flex:none}
+  .pmeta{flex:1}
+  .pmeta h2{margin:0;font-size:26px;font-weight:800;color:var(--navy);letter-spacing:-.5px}
+  .pmeta .role{color:var(--muted);font-size:13.5px;margin-top:2px}
+  .ptags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .ptag{display:flex;align-items:center;gap:7px;border:1px solid var(--border);border-radius:12px;padding:8px 12px;font-size:12.5px;font-weight:600;color:var(--text)}
+  .ptag [data-lucide]{width:15px;height:15px;color:var(--muted)}
+  .editp{border:1px solid var(--border);background:#fff;border-radius:12px;padding:10px 16px;font-weight:700;font-size:13px;color:var(--navy);cursor:pointer;display:flex;gap:7px;align-items:center}
+  .editp [data-lucide]{width:15px;height:15px}
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+  .c4{grid-column:span 4}.c6{grid-column:span 6}.c8{grid-column:span 8}
+  .frow{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid #F2F1EA}
+  .frow:last-child{border-bottom:0}
+  .frow .fl{color:var(--muted);font-size:12.5px;font-weight:600}
+  .frow .fv{font-weight:700;font-size:13.5px;color:var(--navy)}
+  .mix{height:14px;border-radius:8px;overflow:hidden;display:flex;margin:6px 0 12px}
+  .mix i{display:block;height:100%}
+  .mix .core{background:#cfd8d2}.mix .connect{background:#7fc06a}.mix .grow{background:var(--green)}.mix .plus{background:var(--navy)}
+  .mixleg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);font-weight:600}
+  .mixleg .d{width:9px;height:9px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:middle}
+  .d.core{background:#cfd8d2}.d.connect{background:#7fc06a}.d.grow{background:var(--green)}.d.plus{background:var(--navy)}
+  .bstat{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:4px}
+  .bs{background:#FAFAF6;border:1px solid var(--border);border-radius:14px;padding:13px}
+  .bs .v{font-size:22px;font-weight:800;color:var(--navy);line-height:1}.bs .k{font-size:11px;color:var(--muted);font-weight:600;margin-top:3px}
+  .lvl{display:flex;align-items:center;gap:14px;margin-top:4px}
+  .lvlbadge{width:54px;height:54px;border-radius:16px;background:#F4F8EC;border:1px solid #dfeebf;display:grid;place-items:center;color:var(--green);font-weight:800;font-size:18px;flex:none}
+  .lvl .lt b{font-size:15px;font-weight:800;color:var(--navy)}.lvl .lt span{color:var(--muted);font-size:12.5px;display:block}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="nav">
+    <div class="logo"><span class="mk">J</span> AM Hub</div>
+    <nav class="pillnav">
+      <a href="#">Hub</a><a href="#">Activity List</a><a href="#">Pipeline</a><a href="#">Performance</a><a href="#">Promos</a><a href="#">Development</a>
+    </nav>
+    <div class="navicons">
+      <div class="ic-btn"><i data-lucide="settings"></i></div>
+      <div class="ic-btn"><i data-lucide="bell"></i><span class="nub"></span></div>
+      <div class="ava">ZF</div>
+    </div>
+  </div>
+
+  <div class="pagehead"><div><h1>Profile</h1></div></div>
+
+  <div class="card phero">
+    <div class="pava">ZF</div>
+    <div class="pmeta">
+      <h2>Zaid Farooqui</h2>
+      <div class="role">Account Manager · Expansion</div>
+      <div class="ptags">
+        <span class="ptag"><i data-lucide="map-pin"></i> Pacific (PT)</span>
+        <span class="ptag"><i data-lucide="clock"></i> 6am–4pm PST</span>
+        <span class="ptag"><i data-lucide="users"></i> 312 accounts</span>
+        <span class="ptag"><i data-lucide="award"></i> Level 3 AM</span>
+      </div>
+    </div>
+    <button class="editp"><i data-lucide="pencil"></i> Edit</button>
+  </div>
+
+  <div class="grid">
+
+    <!-- DETAILS -->
+    <div class="card c4">
+      <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="user"></i></span><h3>Details</h3></div></div>
+      <div class="frow"><span class="fl">Email</span><span class="fv">zaid.f@getjobber.com</span></div>
+      <div class="frow"><span class="fl">Timezone</span><span class="fv">Pacific (PT)</span></div>
+      <div class="frow"><span class="fl">Working hours</span><span class="fv">6am–4pm</span></div>
+      <div class="frow"><span class="fl">People Leader</span><span class="fv">S. Walker</span></div>
+      <div class="frow"><span class="fl">Out-of-office buddy</span><span class="fv">L. Levesque</span></div>
+    </div>
+
+    <!-- BOOK -->
+    <div class="card c8">
+      <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="briefcase"></i></span><h3>Book of business</h3></div><span class="src">Salesforce + Anchor</span></div>
+      <div class="mix">
+        <i class="core" style="width:34%"></i><i class="connect" style="width:38%"></i><i class="grow" style="width:22%"></i><i class="plus" style="width:6%"></i>
+      </div>
+      <div class="mixleg">
+        <span><span class="d core"></span>Core 34%</span>
+        <span><span class="d connect"></span>Connect 38%</span>
+        <span><span class="d grow"></span>Grow 22%</span>
+        <span><span class="d plus"></span>Plus 6%</span>
+      </div>
+      <div class="bstat">
+        <div class="bs"><div class="v num">312</div><div class="k">Accounts owned</div></div>
+        <div class="bs"><div class="v num">75</div><div class="k">In working</div></div>
+        <div class="bs"><div class="v num">12</div><div class="k">Open opps</div></div>
+      </div>
+    </div>
+
+    <!-- THIS MONTH -->
+    <div class="card c6">
+      <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="trending-up"></i></span><h3>This month</h3></div></div>
+      <div class="bstat">
+        <div class="bs"><div class="v num">78%</div><div class="k">To target</div></div>
+        <div class="bs"><div class="v num">14</div><div class="k">Upgrades</div></div>
+        <div class="bs"><div class="v num">6</div><div class="k">JPay enabled</div></div>
+      </div>
+    </div>
+
+    <!-- LEVEL -->
+    <div class="card c6">
+      <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="award"></i></span><h3>Level &amp; development</h3></div></div>
+      <div class="lvl">
+        <div class="lvlbadge">L3</div>
+        <div class="lt"><b>Level 3 Account Manager</b><span>Next 1:1 with PL · Mon 10am</span></div>
+      </div>
+    </div>
+
+  </div>
+  <div class="foot"></div>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

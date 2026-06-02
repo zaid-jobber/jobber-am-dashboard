@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jobber AM Hub — Pipeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="concept.css" />
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  .summ{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:16px}
+  .stile{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:15px 18px;box-shadow:0 4px 16px rgba(1,41,57,.04)}
+  .stile .v{font-size:25px;font-weight:800;color:var(--navy);line-height:1}
+  .stile .k{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:4px}
+  .filters{display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+  .search{flex:1;min-width:200px;max-width:300px;border:1px solid var(--border);background:#fff;border-radius:30px;padding:10px 16px;font:inherit;font-size:13px;color:var(--text)}
+  .board{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:start}
+  .bcol{background:rgba(255,255,255,.5);border:1px solid var(--border);border-radius:20px;padding:12px}
+  .colh{display:flex;align-items:center;gap:8px;padding:4px 6px 12px;font-size:12.5px;font-weight:800;color:var(--navy)}
+  .colh .dot{width:9px;height:9px;border-radius:50%}
+  .dot.g1{background:var(--muted)}.dot.g2{background:#cf8a1f}.dot.g3{background:#2b6cb0}.dot.g4{background:var(--green)}
+  .colh .n{margin-left:auto;background:#fff;border:1px solid var(--border);border-radius:20px;padding:1px 9px;font-size:11.5px;color:var(--muted)}
+  .colh .sum{font-weight:600;color:var(--muted);font-size:11px}
+  .pc{background:#fff;border:1px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px;box-shadow:0 2px 6px rgba(1,41,57,.04);cursor:pointer}
+  .pc:hover{border-color:var(--green)}
+  .pc .nm{font-weight:700;font-size:13.5px;display:flex;align-items:center;gap:6px}
+  .pc .nm .sf{margin-left:auto;color:var(--muted)}.pc .nm .sf [data-lucide]{width:14px;height:14px}
+  .pc .meta{color:var(--muted);font-size:11.5px;margin-top:3px}
+  .pc .pf{display:flex;align-items:center;gap:6px;margin-top:9px;flex-wrap:wrap}
+  .tg{font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px}
+  .tg.plan{background:#F4F5EC;color:var(--text)}.tg.cad{background:#EAF6EE;color:var(--green)}.tg.opp{background:#E8F0FC;color:#2b6cb0}.tg.mrr{background:#FFF8EC;color:#8a6a1f}
+  .pc .mrrbig{font-weight:800;color:var(--navy)}
+  .dq{margin-top:16px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:18px;box-shadow:var(--shadow)}
+  .dq h3{margin:0 0 12px;font-size:16px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:8px}
+  .dq h3 [data-lucide]{width:18px;height:18px;color:#c0392b}
+  .dqgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .dqc{border:1px solid var(--border);border-radius:14px;padding:12px;background:#FCFCFA}
+  .dqc .nm{font-weight:700;font-size:13px}.dqc .meta{color:var(--muted);font-size:11px;margin-top:2px}
+  .dqc .why{margin-top:8px;font-size:11.5px;color:#8a3b3b;background:#FBEEE9;border-radius:10px;padding:7px 9px}.dqc .why b{color:#7a2d2d}
+  .dqc .re{margin-top:9px;font-size:11.5px;font-weight:800;color:var(--green);cursor:pointer;display:flex;gap:5px;align-items:center}.dqc .re [data-lucide]{width:14px;height:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="nav">
+    <div class="logo"><span class="mk">J</span> AM Hub</div>
+    <nav class="pillnav">
+      <a href="#">Hub</a><a href="#">Activity List</a><a class="active" href="#">Pipeline</a><a href="#">Performance</a><a href="#">Promos</a><a href="#">Development</a>
+    </nav>
+    <div class="navicons">
+      <div class="ic-btn"><i data-lucide="settings"></i></div>
+      <div class="ic-btn"><i data-lucide="bell"></i><span class="nub"></span></div>
+      <div class="ava">ZF</div>
+    </div>
+  </div>
+
+  <div class="pagehead">
+    <div><h1>Pipeline</h1><p>Your book · Salesforce + Anchor</p></div>
+    <div class="controls"><div class="chip on">Board</div><div class="chip">Table</div></div>
+  </div>
+
+  <div class="summ">
+    <div class="stile"><div class="v num">312</div><div class="k">In book</div></div>
+    <div class="stile"><div class="v num">48</div><div class="k">In cadence</div></div>
+    <div class="stile"><div class="v num">12</div><div class="k">Open opps</div></div>
+    <div class="stile"><div class="v num">8</div><div class="k">Closed won MTD</div></div>
+    <div class="stile"><div class="v num">19</div><div class="k">Disqualified</div></div>
+  </div>
+
+  <div class="filters">
+    <input class="search" placeholder="Search accounts" />
+    <div class="chip">Plan <i data-lucide="chevron-down"></i></div>
+    <div class="chip">Industry <i data-lucide="chevron-down"></i></div>
+    <div class="chip">Timezone <i data-lucide="chevron-down"></i></div>
+    <div class="chip">JPay <i data-lucide="chevron-down"></i></div>
+  </div>
+
+  <div class="board">
+
+    <div class="bcol">
+      <div class="colh"><span class="dot g1"></span>New / Working <span class="sum">pre-opp</span><span class="n">96</span></div>
+      <div class="pc"><div class="nm">Maple Grove HVAC <span class="sf"><i data-lucide="cloud"></i></span></div><div class="meta">HVAC · MT · Connect</div><div class="pf"><span class="tg plan">Working</span><span class="tg">JPay: Eligible</span></div></div>
+      <div class="pc"><div class="nm">Greenline Landscaping <span class="sf"><i data-lucide="cloud"></i></span></div><div class="meta">Landscaping · ET · Connect</div><div class="pf"><span class="tg plan">Working</span><span class="tg mrr">Grace 5d</span></div></div>
+      <div class="pc"><div class="nm">Hometown Plumbing <span class="sf"><i data-lucide="cloud"></i></span></div><div class="meta">Plumbing · ET · Core · new</div><div class="pf"><span class="tg plan">New</span></div></div>
+    </div>
+
+    <div class="bcol">
+      <div class="colh"><span class="dot g2"></span>Discovery <span class="sum">opp open</span><span class="n">7</span></div>
+      <div class="pc"><div class="nm">Apex HVAC <span class="sf"><i data-lucide="cloud"></i></span></div><div class="meta">HVAC · MT · Grow trial</div><div class="pf"><span class="tg opp">Upsell</span><span class="tg cad">Grow Trial 4/11</span></div></div>
+      <div class="pc"><div class="nm">Riverside Turf <span class="sf"><i data-lucide="cloud"></i></span></div><div class="meta">Landscaping · ET · Connect</div><div class="pf"><span class="tg opp">Upsell</span></div></div>
+    </div>
+
+    <div class="bcol">
+      <div class="colh"><span class="dot g3"></span>Evaluating <span class="sum">rec sent</span><span class="n">5</span></div>
+      <div class="pc"><div class="nm">Coastal Painting <span class="sf"><i data-lucide="cloud"></i></span></div><div class="meta">Painting · AT · Grow</div><div class="pf"><span class="tg opp">Connect→Grow</span><span class="tg cad">follow-up due</span></div></div>
+      <div class="pc"><div class="nm">Peak Plumbing <span class="sf"><i data-lucide="cloud"></i></span></div><div class="meta">Plumbing · PT · Grow</div><div class="pf"><span class="tg opp">JPay</span><span class="tg">demo done</span></div></div>
+    </div>
+
+    <div class="bcol">
+      <div class="colh"><span class="dot g4"></span>Closed Won <span class="sum">MTD</span><span class="n">8</span></div>
+      <div class="pc"><div class="nm">Summit Roofing <span class="sf"><i data-lucide="cloud"></i></span></div><div class="meta">Roofing · MT · Grow (ACBM)</div><div class="pf"><span class="tg cad">Connect → Grow</span><span class="mrrbig">+$180</span></div></div>
+      <div class="pc"><div class="nm">Bright Home <span class="sf"><i data-lucide="cloud"></i></span></div><div class="meta">Cleaning · PT · Plus (annual)</div><div class="pf"><span class="tg cad">Grow → Plus</span><span class="mrrbig">+$240</span></div></div>
+      <div class="pc"><div class="nm">Lakeside Lawn <span class="sf"><i data-lucide="cloud"></i></span></div><div class="meta">Landscaping · CT</div><div class="pf"><span class="tg cad">JPay enabled</span><span class="mrrbig">pGPV $22k</span></div></div>
+    </div>
+
+  </div>
+
+  <div class="dq">
+    <h3><i data-lucide="ban"></i> Disqualified</h3>
+    <div class="dqgrid">
+      <div class="dqc"><div class="nm">Valley Electric</div><div class="meta">Electrical · MT · Grow</div><div class="why"><b>Satisfaction with Current Package</b> · 30d</div><div class="re"><i data-lucide="undo-2"></i> Re-add</div></div>
+      <div class="dqc"><div class="nm">Metro Movers</div><div class="meta">Moving · ET · Connect</div><div class="why"><b>Seasonal Consideration</b> · Q3 · 12d</div><div class="re"><i data-lucide="undo-2"></i> Re-add</div></div>
+      <div class="dqc"><div class="nm">QuickFix Handyman</div><div class="meta">Handyman · PT · Core</div><div class="why"><b>Price-Sensitive</b> · 45d</div><div class="re"><i data-lucide="undo-2"></i> Re-add</div></div>
+      <div class="dqc"><div class="nm">City Snow Pros</div><div class="meta">Snow · CT · Connect</div><div class="why"><b>Request No Contact</b> · 60d</div><div class="re"><i data-lucide="undo-2"></i> Re-add</div></div>
+    </div>
+  </div>
+
+  <div class="foot"></div>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

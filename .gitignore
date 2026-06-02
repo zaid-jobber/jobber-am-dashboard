@@ -1,0 +1,22 @@
+# dependencies
+node_modules/
+**/node_modules/
+
+# build output (GitHub Actions rebuilds this for Pages)
+dist/
+**/dist/
+
+# secrets — never commit real keys
+.env
+**/.env
+!**/.env.example
+
+# per-AM saved state (server-side persistence)
+server/data/
+
+# misc
+.DS_Store
+*.log
+
+# local editor/agent settings
+.claude/
