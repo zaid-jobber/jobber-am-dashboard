@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jobber AM Hub — Cadence Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="concept.css" />
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  .crumb{font-size:12.5px;color:var(--muted);font-weight:600;margin-bottom:2px}
+  .crumb a{color:var(--green);text-decoration:none}
+  .layout{display:grid;grid-template-columns:.72fr 1.55fr;gap:16px;align-items:start}
+  .lib{padding:18px}
+  .libhead{display:flex;align-items:center;justify-content:space-between}
+  .libhead h3{margin:0;font-size:16px;font-weight:800;color:var(--navy)}
+  .imp{font-size:11.5px;font-weight:700;color:var(--green);background:#EAF6EE;border:1px solid #cfe9d6;border-radius:20px;padding:6px 11px;cursor:pointer;display:flex;gap:5px;align-items:center}
+  .imp [data-lucide]{width:14px;height:14px}
+  .seclab{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:800;margin:18px 0 8px}
+  .cad{display:flex;align-items:center;gap:11px;padding:11px;border-radius:14px;border:1px solid transparent;cursor:pointer}
+  .cad:hover{background:#FAFAF6}.cad.sel{background:#F4F8EC;border-color:#dfeebf}
+  .cad .ci{width:36px;height:36px;border-radius:11px;background:#F4F5EC;display:grid;place-items:center;color:var(--navy);flex:none}
+  .cad.sel .ci{background:#fff}.cad .ci [data-lucide]{width:18px;height:18px}
+  .cad .ct{flex:1;min-width:0}.cad .ct b{font-size:13px;font-weight:700;display:block}
+  .cad .ct .mt{font-size:11px;color:var(--muted);display:flex;gap:6px;align-items:center;margin-top:2px}
+  .chips{display:flex;gap:4px;color:var(--muted)}.chips [data-lucide]{width:12px;height:12px}
+  .cad .tools{margin-left:auto;color:var(--muted);display:none;gap:4px}.cad:hover .tools{display:flex}
+  .cad .tools [data-lucide]{width:15px;height:15px}
+  .newbtn{margin-top:16px;width:100%;border:1px dashed var(--border);background:rgba(255,255,255,.4);border-radius:14px;padding:12px;font-weight:700;font-size:13px;color:var(--muted);cursor:pointer}
+  .newbtn:hover{border-color:var(--green);color:var(--green)}
+
+  .builder{padding:0;overflow:hidden}
+  .aibar{padding:18px 20px;background:linear-gradient(120deg,#0a3a4d,#012939);color:#fff}
+  .aibar .lab{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--lime);display:flex;align-items:center;gap:6px}
+  .aibar .lab [data-lucide]{width:14px;height:14px}
+  .aibar .row{display:flex;gap:10px;margin-top:9px}
+  .aibar input{flex:1;border:0;border-radius:13px;padding:13px 15px;font:inherit;font-size:14px;color:var(--text)}
+  .aibar .build{border:0;border-radius:13px;background:var(--lime);color:var(--navy);font-weight:800;font-size:13.5px;padding:0 18px;cursor:pointer;white-space:nowrap}
+  .bhead{display:flex;align-items:center;gap:12px;padding:18px 20px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+  .bhead .nm{font-size:18px;font-weight:800;color:var(--navy)}
+  .bhead .nm small{font-size:11px;font-weight:700;color:var(--green);background:#EAF6EE;border-radius:20px;padding:3px 9px;margin-left:8px}
+  .bhead .meta{color:var(--muted);font-size:12px;margin-top:2px}
+  .bhead .right{margin-left:auto;display:flex;gap:8px}
+  .gbtn{border:1px solid var(--border);background:#fff;border-radius:12px;padding:9px 13px;font-weight:700;font-size:12.5px;color:var(--navy);cursor:pointer;display:flex;gap:6px;align-items:center}
+  .gbtn [data-lucide]{width:15px;height:15px}
+  .enroll{display:flex;align-items:center;gap:10px;padding:12px 20px;background:#F4F8EC;border-bottom:1px solid var(--border);flex-wrap:wrap;font-size:12.5px}
+  .enroll .el{font-weight:800;color:var(--navy)}
+  .segtog{display:inline-flex;border:1px solid var(--border);border-radius:30px;overflow:hidden;background:#fff}
+  .segtog button{border:0;background:#fff;padding:7px 14px;font-weight:700;font-size:12.5px;cursor:pointer;color:var(--muted)}
+  .segtog button.on{background:var(--navy);color:#fff}
+  .rulechip{background:#fff;border:1px solid #dfeebf;border-radius:20px;padding:6px 12px;font-weight:600;color:#3f5a1e}
+  .rulechip .edit{color:var(--green);font-weight:800;cursor:pointer;margin-left:6px}
+  .steps{padding:14px 20px 8px}
+  .step{display:flex;gap:14px;align-items:stretch}
+  .railcol{display:flex;flex-direction:column;align-items:center;width:54px;flex:none}
+  .daychip{width:54px;border-radius:12px;background:var(--navy);color:#fff;text-align:center;padding:7px 0;font-weight:800;font-size:11px;line-height:1.1}
+  .daychip small{display:block;font-size:8.5px;font-weight:700;opacity:.7}
+  .rail{flex:1;width:2px;background:var(--border);margin:6px 0}.step:last-child .rail{display:none}
+  .stepcard{flex:1;border:1px solid var(--border);border-radius:16px;padding:13px 15px;margin-bottom:14px;background:#fff}
+  .stepcard .sline{display:flex;align-items:center;gap:8px}
+  .chanico{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;flex:none}
+  .chanico [data-lucide]{width:16px;height:16px}
+  .chanico.call{background:#EAF6EE;color:var(--green)}.chanico.email{background:#E8F0FC;color:#2b6cb0}.chanico.text{background:#FFF4E2;color:#cf8a1f}
+  .stepcard .stitle{font-weight:700;font-size:13.5px}.stepcard .stitle small{display:block;color:var(--muted);font-weight:500;font-size:11.5px}
+  .stepcard .tools{margin-left:auto;display:flex;gap:6px;color:var(--muted)}.stepcard .tools [data-lucide]{width:15px;height:15px;cursor:pointer}
+  .preview{margin-top:10px;background:#FAFAF6;border:1px solid var(--border);border-radius:11px;padding:10px 12px;font-size:12.5px;color:var(--text)}
+  .preview .pk{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:800;margin-bottom:3px}
+  .preview .copy{float:right;font-size:11px;font-weight:700;color:var(--green);cursor:pointer}
+  .aitag{font-size:10px;font-weight:800;color:var(--green);background:#EAF6EE;border-radius:20px;padding:2px 8px}
+  .addstep{margin:2px 0 18px 68px;border:1px dashed var(--border);background:rgba(255,255,255,.4);border-radius:13px;padding:11px;font-weight:700;font-size:12.5px;color:var(--muted);cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+  .addstep:hover{border-color:var(--green);color:var(--green)}.addstep [data-lucide]{width:15px;height:15px}
+  .bfoot{display:flex;gap:10px;padding:16px 20px;border-top:1px solid var(--border);background:#FAFAF6;flex-wrap:wrap}
+  .bfoot .save{border:1px solid var(--border);background:#fff;border-radius:13px;padding:12px 18px;font-weight:800;font-size:13.5px;color:var(--navy);cursor:pointer;display:flex;gap:7px;align-items:center}
+  .bfoot .save [data-lucide]{width:16px;height:16px}
+  .bfoot .apply{margin-left:auto;border:0;border-radius:13px;background:var(--green);color:#fff;font-weight:800;font-size:13.5px;padding:12px 22px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="nav">
+    <div class="logo"><span class="mk">J</span> AM Hub</div>
+    <nav class="pillnav">
+      <a href="#">Hub</a><a class="active" href="#">Activity List</a><a href="#">Pipeline</a><a href="#">Performance</a><a href="#">Promos</a><a href="#">Development</a>
+    </nav>
+    <div class="navicons">
+      <div class="ic-btn"><i data-lucide="settings"></i></div>
+      <div class="ic-btn"><i data-lucide="bell"></i><span class="nub"></span></div>
+      <div class="ava">ZF</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="crumb"><a href="#">‹ Activity List</a></div>
+    <div class="pagehead"><div><h1>Cadence Builder</h1><p>Describe it, AI builds it, tune &amp; save</p></div></div>
+  </div>
+
+  <div class="layout">
+
+    <!-- LIBRARY -->
+    <div class="card lib">
+      <div class="libhead"><h3>Your cadences</h3><span class="imp"><i data-lucide="upload"></i> Import</span></div>
+      <div class="seclab">EXP standard sequences</div>
+      <div class="cad sel"><div class="ci"><i data-lucide="sprout"></i></div><div class="ct"><b>EXP - Grow Trial</b><div class="mt">11 steps · 11d <span class="chips"><i data-lucide="phone"></i><i data-lucide="message-square"></i><i data-lucide="mail"></i></span></div></div><div class="tools"><i data-lucide="download"></i><i data-lucide="copy"></i><i data-lucide="trash-2"></i></div></div>
+      <div class="cad"><div class="ci"><i data-lucide="sprout"></i></div><div class="ct"><b>EXP - Connect Trial</b><div class="mt">10 steps · 14d <span class="chips"><i data-lucide="phone"></i><i data-lucide="message-square"></i><i data-lucide="mail"></i></span></div></div></div>
+      <div class="cad"><div class="ci"><i data-lucide="alert-triangle"></i></div><div class="ct"><b>EXP - Grace Period</b><div class="mt">10 steps · 7d <span class="chips"><i data-lucide="phone"></i><i data-lucide="mail"></i></span></div></div></div>
+      <div class="cad"><div class="ci"><i data-lucide="ruler"></i></div><div class="ct"><b>EXP - Quoters by Usage</b><div class="mt">13 steps · 14d <span class="chips"><i data-lucide="phone"></i><i data-lucide="message-square"></i></span></div></div></div>
+      <div class="cad"><div class="ci"><i data-lucide="credit-card"></i></div><div class="ct"><b>EXP - Jobber Payments</b><div class="mt">10 steps · 9d <span class="chips"><i data-lucide="phone"></i><i data-lucide="mail"></i></span></div></div></div>
+      <div class="cad"><div class="ci"><i data-lucide="briefcase"></i></div><div class="ct"><b>EXP - Opp Follow-Up</b><div class="mt">11 steps · 7d <span class="chips"><i data-lucide="mail"></i><i data-lucide="phone"></i></span></div></div></div>
+      <div class="cad"><div class="ci"><i data-lucide="cpu"></i></div><div class="ct"><b>EXP - NBA Accounts</b><div class="mt">12 steps · 14d <span class="chips"><i data-lucide="phone"></i><i data-lucide="message-square"></i></span></div></div></div>
+      <div class="seclab">Saved by you</div>
+      <div class="cad"><div class="ci"><i data-lucide="home"></i></div><div class="ct"><b>Grow → Landscaping</b><div class="mt">9 steps · 10d <span class="chips"><i data-lucide="phone"></i><i data-lucide="message-square"></i></span></div></div><div class="tools"><i data-lucide="download"></i><i data-lucide="copy"></i><i data-lucide="trash-2"></i></div></div>
+      <button class="newbtn">+ New cadence</button>
+    </div>
+
+    <!-- BUILDER -->
+    <div class="card builder">
+      <div class="aibar">
+        <div class="lab"><i data-lucide="sparkles"></i> Build with AI</div>
+        <div class="row"><input value="Convert a Grow trial before it ends" /><button class="build">Build</button></div>
+      </div>
+      <div class="bhead">
+        <div>
+          <span class="nm" contenteditable>EXP - Grow Trial <small>AI-tuned</small></span>
+          <div class="meta">11 steps · 11 days · opens multi-channel to reach fast</div>
+        </div>
+        <div class="right"><button class="gbtn"><i data-lucide="rotate-ccw"></i> Regenerate</button></div>
+      </div>
+      <div class="enroll">
+        <span class="el">Enrollment</span>
+        <span class="segtog"><button>Manual</button><button class="on">Auto</button></span>
+        <span class="rulechip">When: Grow trial starts <span class="edit">edit</span></span>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="railcol"><div class="daychip">DAY<small>1</small></div><div class="rail"></div></div>
+          <div class="stepcard">
+            <div class="sline"><div class="chanico call"><i data-lucide="phone"></i></div><div class="chanico text"><i data-lucide="message-square"></i></div><div class="stitle">Call + SMS — first contact<small>Reach fast while the trial's hot</small></div><div class="tools"><i data-lucide="grip-vertical"></i><i data-lucide="pencil"></i><i data-lucide="trash-2"></i></div></div>
+            <div class="preview"><span class="copy">Copy SMS</span><div class="pk">On the call · <span class="aitag">AI script</span></div>Live P.L.A.N. script. SMS: "Saw you started a Grow trial — got 10 min this week?"</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="railcol"><div class="daychip">DAY<small>2</small></div><div class="rail"></div></div>
+          <div class="stepcard">
+            <div class="sline"><div class="chanico email"><i data-lucide="mail"></i></div><div class="stitle">Value email<small>What Grow unlocks for their goals</small></div><div class="tools"><i data-lucide="grip-vertical"></i><i data-lucide="pencil"></i><i data-lucide="trash-2"></i></div></div>
+            <div class="preview"><span class="copy">Open Gmail draft</span><div class="pk">Subject · AI-drafted</div>"Getting the most out of your Grow trial…"</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="railcol"><div class="daychip">DAY<small>4</small></div><div class="rail"></div></div>
+          <div class="stepcard">
+            <div class="sline"><div class="chanico call"><i data-lucide="phone"></i></div><div class="chanico email"><i data-lucide="mail"></i></div><div class="stitle">Call + Email — discovery<small>Streamline vs revenue · 3–4 problems</small></div><div class="tools"><i data-lucide="grip-vertical"></i><i data-lucide="pencil"></i><i data-lucide="trash-2"></i></div></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="railcol"><div class="daychip">DAY<small>7</small></div><div class="rail"></div></div>
+          <div class="stepcard">
+            <div class="sline"><div class="chanico text"><i data-lucide="message-square"></i></div><div class="stitle">Text nudge<small>Quick re-touch</small></div><div class="tools"><i data-lucide="grip-vertical"></i><i data-lucide="pencil"></i><i data-lucide="trash-2"></i></div></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="railcol"><div class="daychip">DAY<small>9</small></div><div class="rail"></div></div>
+          <div class="stepcard">
+            <div class="sline"><div class="chanico call"><i data-lucide="phone"></i></div><div class="chanico email"><i data-lucide="mail"></i></div><div class="stitle">Call + Email — mid-trial review<small>Solution + pricing (push annual/ACBM)</small></div><div class="tools"><i data-lucide="grip-vertical"></i><i data-lucide="pencil"></i><i data-lucide="trash-2"></i></div></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="railcol"><div class="daychip">DAY<small>12</small></div></div>
+          <div class="stepcard">
+            <div class="sline"><div class="chanico call"><i data-lucide="phone"></i></div><div class="stitle">Close call + update status<small>Convert &amp; book training, or set follow-up</small></div><div class="tools"><i data-lucide="grip-vertical"></i><i data-lucide="pencil"></i><i data-lucide="trash-2"></i></div></div>
+          </div>
+        </div>
+      </div>
+
+      <button class="addstep"><i data-lucide="plus"></i> Add step</button>
+
+      <div class="bfoot">
+        <button class="save"><i data-lucide="save"></i> Save</button>
+        <button class="save"><i data-lucide="download"></i> Export</button>
+        <button class="apply">Apply to account</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"></div>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

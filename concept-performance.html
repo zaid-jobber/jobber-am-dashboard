@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jobber AM Hub — Performance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="concept.css" />
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  .hero{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:14px}
+  .hcard{background:var(--surface);border:1px solid rgba(255,255,255,.7);border-radius:var(--card-r);padding:20px;box-shadow:var(--shadow);position:relative}
+  .hcard .k{font-size:12px;font-weight:600;color:var(--muted)}
+  .hcard .v{font-size:36px;font-weight:800;letter-spacing:-1px;color:var(--navy);line-height:1;margin:8px 0 6px}
+  .hcard .d{font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px}
+  .hcard .d [data-lucide]{width:14px;height:14px}
+  .up{color:var(--green)}.down{color:#c0392b}
+  .hcard .sub{font-size:11.5px;color:var(--muted)}
+  .strip2{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}
+  .scard{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:14px 18px;display:flex;align-items:center;gap:14px;box-shadow:0 4px 16px rgba(1,41,57,.04)}
+  .scard .si{width:40px;height:40px;border-radius:12px;background:#F4F5EC;display:grid;place-items:center;color:var(--navy)}
+  .scard .v{font-size:21px;font-weight:800;color:var(--navy);line-height:1}
+  .scard .k{font-size:11.5px;color:var(--muted);font-weight:600}
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+  .c4{grid-column:span 4}.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c8{grid-column:span 8}.c12{grid-column:span 12}
+  .csub{color:var(--muted);font-size:12px;margin:-6px 0 14px}
+  .star-c{font-size:10px;font-weight:800;color:var(--navy);background:var(--lime);padding:3px 9px;border-radius:20px}
+  .insight{display:flex;gap:9px;align-items:center;background:#F4F8EC;border:1px solid #dfeebf;border-radius:14px;padding:11px 14px;margin-bottom:14px;font-size:12.5px;color:#3f5a1e;font-weight:600}
+  .insight [data-lucide]{width:18px;height:18px;color:var(--green);flex:none}
+  /* heatmap */
+  .hm{display:grid;grid-template-columns:auto repeat(10,1fr);gap:5px;align-items:center}
+  .hm .hh{font-size:10.5px;color:var(--muted);font-weight:700;text-align:center}
+  .hm .rl{font-size:11px;color:var(--muted);font-weight:700;text-align:right;padding-right:8px}
+  .cell{height:30px;border-radius:7px;background:#eef0e6;display:grid;place-items:center;font-size:10px;font-weight:700;color:transparent}
+  .cell.l1{background:#dcebd0}.cell.l2{background:#b6da9f}.cell.l3{background:#7fc06a;color:#1c3a14}.cell.l4{background:var(--green);color:#fff}
+  .cell.best{box-shadow:0 0 0 2px var(--lime),0 0 0 4px rgba(168,227,0,.3)}
+  .scale{display:flex;align-items:center;gap:6px;justify-content:flex-end;margin-top:14px;font-size:11px;color:var(--muted)}.scale .cell{width:22px;height:16px}
+  /* compare */
+  .cmp{display:flex;flex-direction:column;gap:14px}
+  .cmprow .top{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:7px}.cmprow .top span{color:var(--muted)}
+  .cmptrack{height:32px;border-radius:12px;background:#F4F5EC;overflow:hidden}
+  .cmptrack>i{display:flex;align-items:center;height:100%;border-radius:12px;color:#fff;font-weight:800;font-size:13px;padding-left:12px}
+  .cmptrack>i.rain{background:var(--rain)}.cmptrack>i.clear{background:#c9b78a}
+  .deltabox{margin-top:14px;background:#EAF3FB;border:1px solid #cfe4f3;border-radius:14px;padding:11px 14px;font-size:13px;font-weight:700;color:#1b5a82}
+  /* funnel */
+  .funnel{display:flex;flex-direction:column;gap:11px}
+  .fstep{display:flex;align-items:center;gap:12px}.fstep .lab{width:120px;font-size:12.5px;font-weight:700}
+  .fbar{flex:1;height:36px;border-radius:11px;background:#F4F5EC;position:relative;overflow:hidden}
+  .fbar>i{position:absolute;inset:0 auto 0 0;border-radius:11px;display:flex;align-items:center;padding-left:13px;color:#fff;font-weight:800;font-size:13px}
+  .fbar .navy{background:var(--navy)}.fbar .g1{background:#2e7d46}.fbar .g2{background:var(--green)}.fbar .g3{background:#7fc06a;color:#1c3a14}
+  .fstep .pct{width:54px;text-align:right;font-size:13px;font-weight:800;color:var(--muted)}
+  /* progress */
+  .prog{display:flex;flex-direction:column;gap:14px}
+  .pr .top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}.pr .top b{font-weight:800;color:var(--navy)}.pr .top .g{color:var(--muted);font-weight:600}
+  .track{height:11px;border-radius:8px;background:#F4F5EC;overflow:hidden}.track>i{display:block;height:100%;border-radius:8px;background:var(--navy)}.track>i.lime{background:var(--lime)}.track>i.green{background:var(--green)}
+  /* tables */
+  .tbl{width:100%;border-collapse:collapse}
+  .tbl th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700;padding:8px 6px;border-bottom:1px solid var(--border)}
+  .tbl td{padding:10px 6px;border-bottom:1px solid var(--border);font-size:13px}.tbl td:first-child{font-weight:700}.tbl tr:last-child td{border-bottom:0}
+  .mini{display:inline-block;width:48px;height:7px;border-radius:6px;background:#F4F5EC;overflow:hidden;vertical-align:middle;margin-right:7px}.mini>i{display:block;height:100%;background:var(--green);border-radius:6px}
+  .badge{font-size:10px;font-weight:800;padding:2px 8px;border-radius:20px}.badge.win{background:#EAF6EE;color:var(--green)}.badge.low{background:#FBEEE9;color:#c0392b}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:26px}.twocol h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+  .chan{display:inline-flex;align-items:center;gap:5px;font-weight:700}.chan [data-lucide]{width:14px;height:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="nav">
+    <div class="logo"><span class="mk">J</span> AM Hub</div>
+    <nav class="pillnav">
+      <a href="#">Hub</a><a href="#">Activity List</a><a href="#">Pipeline</a><a class="active" href="#">Performance</a><a href="#">Promos</a><a href="#">Development</a>
+    </nav>
+    <div class="navicons">
+      <div class="ic-btn" id="editBtn" title="Customize"><i data-lucide="layout-grid"></i></div>
+      <div class="ic-btn"><i data-lucide="settings"></i></div>
+      <div class="ic-btn"><i data-lucide="bell"></i><span class="nub"></span></div>
+      <div class="ava">ZF</div>
+    </div>
+  </div>
+
+  <div class="pagehead">
+    <div><h1>Performance</h1><p>Trains your ranked list — what you close well rises</p></div>
+    <div class="controls"><div class="chip on">This month</div><div class="chip">Last month</div><div class="chip">Quarter</div></div>
+  </div>
+
+  <div class="editbar"><span class="et"><i data-lucide="sliders-horizontal"></i> Customize</span><span class="hint">Drag to rearrange · ✕ to remove · add tiles</span><button class="done" id="doneBtn">Done</button></div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hcard"><div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div><div class="k">Total Expansion Revenue</div><div class="v num">78%</div><div class="d up"><i data-lucide="arrow-up"></i> to target</div><span class="sub">Upgrade MRR + JPay PGPV</span></div>
+    <div class="hcard"><div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div><div class="k">Upgrade MRR</div><div class="v num">$2.1k</div><div class="d up"><i data-lucide="arrow-up"></i> 84% of goal</div><span class="sub">14 upgrades · ASP $185</span></div>
+    <div class="hcard"><div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div><div class="k">JPay PGPV</div><div class="v num">$41k</div><div class="d down"><i data-lucide="arrow-down"></i> 72% · below floor</div><span class="sub">6 enablements</span></div>
+    <div class="hcard"><div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div><div class="k">Win rate</div><div class="v num">38%</div><div class="d up"><i data-lucide="arrow-up"></i> 2 pts</div><span class="sub">opps won</span></div>
+  </div>
+
+  <!-- STRIP -->
+  <div class="strip2">
+    <div class="scard"><div class="si"><i data-lucide="phone"></i></div><div><div class="v num">31%</div><div class="k">Connection rate · 612 dials</div></div></div>
+    <div class="scard"><div class="si"><i data-lucide="lock"></i></div><div><div class="v num">92%</div><div class="k">90-day retained MRR</div></div></div>
+    <div class="scard"><div class="si"><i data-lucide="clock"></i></div><div><div class="v num">78m</div><div class="k">Talk time / day · goal 90</div></div></div>
+  </div>
+
+  <div class="grid">
+
+    <!-- BEST TIMES -->
+    <div class="card c8">
+      <div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div>
+      <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="clock-4"></i></span><h3>Best times to call</h3></div></div>
+      <div class="insight"><i data-lucide="lightbulb"></i> You connect best <b>Tue &amp; Thu, 8–10am</b></div>
+      <div class="hm">
+        <div></div><div class="hh">6a</div><div class="hh">7</div><div class="hh">8</div><div class="hh">9</div><div class="hh">10</div><div class="hh">11</div><div class="hh">12</div><div class="hh">1p</div><div class="hh">2</div><div class="hh">3</div>
+        <div class="rl">Mon</div><div class="cell l1"></div><div class="cell l2"></div><div class="cell l3"></div><div class="cell l3"></div><div class="cell l2"></div><div class="cell l1"></div><div class="cell"></div><div class="cell l1"></div><div class="cell l2"></div><div class="cell l1"></div>
+        <div class="rl">Tue</div><div class="cell l2"></div><div class="cell l3"></div><div class="cell l4 best">42</div><div class="cell l4">39</div><div class="cell l3"></div><div class="cell l1"></div><div class="cell"></div><div class="cell l2"></div><div class="cell l3"></div><div class="cell l2"></div>
+        <div class="rl">Wed</div><div class="cell l1"></div><div class="cell l2"></div><div class="cell l3"></div><div class="cell l2"></div><div class="cell l1"></div><div class="cell l1"></div><div class="cell"></div><div class="cell l2"></div><div class="cell l3"></div><div class="cell l1"></div>
+        <div class="rl">Thu</div><div class="cell l2"></div><div class="cell l3"></div><div class="cell l4 best">40</div><div class="cell l4">37</div><div class="cell l3"></div><div class="cell l2"></div><div class="cell"></div><div class="cell l2"></div><div class="cell l3"></div><div class="cell l2"></div>
+        <div class="rl">Fri</div><div class="cell l1"></div><div class="cell l2"></div><div class="cell l2"></div><div class="cell l1"></div><div class="cell l1"></div><div class="cell"></div><div class="cell"></div><div class="cell l1"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="scale">Low <div class="cell"></div><div class="cell l1"></div><div class="cell l2"></div><div class="cell l3"></div><div class="cell l4"></div> High</div>
+    </div>
+
+    <!-- WEATHER -->
+    <div class="card c4">
+      <div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div>
+      <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="cloud-rain"></i></span><h3>Weather &amp; connect</h3></div><span class="star-c">★</span></div>
+      <p class="csub">Outdoor trades · rainy vs clear</p>
+      <div class="cmp">
+        <div class="cmprow"><div class="top"><span>Rainy</span><b>41%</b></div><div class="cmptrack"><i class="rain" style="width:82%">41%</i></div></div>
+        <div class="cmprow"><div class="top"><span>Clear</span><b>23%</b></div><div class="cmptrack"><i class="clear" style="width:46%">23%</i></div></div>
+      </div>
+      <div class="deltabox">+18 pts on rainy days</div>
+    </div>
+
+    <!-- SIGNAL HIT-RATE -->
+    <div class="card c7">
+      <div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div>
+      <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="target"></i></span><h3>Signal hit-rate</h3></div><span class="star-c">★</span></div>
+      <table class="tbl">
+        <thead><tr><th>Reason</th><th>Surfaced</th><th>Connect</th><th>Close</th><th>New MRR</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>Trial ending</td><td>34</td><td>46%</td><td><span class="mini"><i style="width:58%"></i></span>58%</td><td>$910</td><td><span class="badge win">Top</span></td></tr>
+          <tr><td>Grace period</td><td>21</td><td>41%</td><td><span class="mini"><i style="width:49%"></i></span>49%</td><td>$640</td><td><span class="badge win">Strong</span></td></tr>
+          <tr><td>JPay verifying</td><td>18</td><td>38%</td><td><span class="mini"><i style="width:33%"></i></span>33%</td><td>—</td><td></td></tr>
+          <tr><td>GSV jump</td><td>27</td><td>30%</td><td><span class="mini"><i style="width:26%"></i></span>26%</td><td>$380</td><td></td></tr>
+          <tr><td>NBA flag</td><td>52</td><td>22%</td><td><span class="mini"><i style="width:14%"></i></span>14%</td><td>$210</td><td><span class="badge low">Weak</span></td></tr>
+        </tbody>
+      </table>
+      <div class="insight" style="margin:14px 0 0"><i data-lucide="cpu"></i> Down-weighting NBA, boosting trial &amp; grace on your list</div>
+    </div>
+
+    <!-- ACTIVITY VS TARGET -->
+    <div class="card c5">
+      <div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div>
+      <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="bar-chart-3"></i></span><h3>Activity vs target</h3><span class="src">Ambition</span></div></div>
+      <div class="prog">
+        <div class="pr"><div class="top"><b>Dials</b><span class="g">612 / 880</span></div><div class="track"><i style="width:70%"></i></div></div>
+        <div class="pr"><div class="top"><b>SMS</b><span class="g">280 / 440</span></div><div class="track"><i class="lime" style="width:64%"></i></div></div>
+        <div class="pr"><div class="top"><b>Talk time</b><span class="g">1,716 / 1,980m</span></div><div class="track"><i style="width:87%"></i></div></div>
+        <div class="pr"><div class="top"><b>Opps created</b><span class="g">118 / 150</span></div><div class="track"><i class="green" style="width:79%"></i></div></div>
+      </div>
+    </div>
+
+    <!-- CADENCE EFFECTIVENESS -->
+    <div class="card c7">
+      <div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div>
+      <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="repeat"></i></span><h3>Cadence effectiveness</h3></div><span class="star-c">★</span></div>
+      <table class="tbl">
+        <thead><tr><th>Step</th><th>Channel</th><th>Sent</th><th>Response</th><th>Close</th></tr></thead>
+        <tbody>
+          <tr><td>Day 1</td><td><span class="chan"><i data-lucide="mail"></i> Email</span></td><td>198</td><td>12%</td><td><span class="mini"><i style="width:18%"></i></span>9%</td></tr>
+          <tr><td>Day 2–3</td><td><span class="chan"><i data-lucide="phone"></i> Call</span></td><td>172</td><td>34%</td><td><span class="mini"><i style="width:60%"></i></span>30%</td></tr>
+          <tr><td>Day 4</td><td><span class="chan"><i data-lucide="message-square"></i> Text</span></td><td>96</td><td>28%</td><td><span class="mini"><i style="width:40%"></i></span>20%</td></tr>
+          <tr><td>Day 7</td><td><span class="chan"><i data-lucide="phone"></i> Call</span></td><td>88</td><td>31%</td><td><span class="mini"><i style="width:48%"></i></span>24%</td></tr>
+        </tbody>
+      </table>
+      <div class="insight" style="margin:14px 0 0"><i data-lucide="repeat"></i> Day-4 text beats Day-1 email 2-to-1 — move a text earlier</div>
+    </div>
+
+    <!-- CALL FUNNEL -->
+    <div class="card c5">
+      <div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div>
+      <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="filter"></i></span><h3>Call funnel</h3></div></div>
+      <div class="funnel">
+        <div class="fstep"><div class="lab">Dials</div><div class="fbar"><i class="navy" style="width:100%">612</i></div><div class="pct">100%</div></div>
+        <div class="fstep"><div class="lab">Connected</div><div class="fbar"><i class="g1" style="width:31%">190</i></div><div class="pct">31%</div></div>
+        <div class="fstep"><div class="lab">One-call close</div><div class="fbar"><i class="g2" style="width:22%">42</i></div><div class="pct">22%</div></div>
+        <div class="fstep"><div class="lab">Opps won</div><div class="fbar"><i class="g3" style="width:15%">18</i></div><div class="pct">38%</div></div>
+      </div>
+    </div>
+
+    <!-- WHERE YOU WIN -->
+    <div class="card c12">
+      <div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div>
+      <div class="ch"><div class="htitle"><span class="hic"><i data-lucide="award"></i></span><h3>Where you win</h3></div></div>
+      <div class="twocol">
+        <div>
+          <h4>By segment</h4>
+          <table class="tbl">
+            <thead><tr><th>Segment</th><th>Connect</th><th>Close</th><th>MRR</th></tr></thead>
+            <tbody>
+              <tr><td>Trial conversions</td><td>44%</td><td><span class="mini"><i style="width:61%"></i></span>61%</td><td>$840</td></tr>
+              <tr><td>Open opps</td><td>39%</td><td><span class="mini"><i style="width:38%"></i></span>38%</td><td>$610</td></tr>
+              <tr><td>Working accounts</td><td>28%</td><td><span class="mini"><i style="width:22%"></i></span>22%</td><td>$420</td></tr>
+              <tr><td>Proactive / NBA</td><td>24%</td><td><span class="mini"><i style="width:18%"></i></span>18%</td><td>$230</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h4>By industry</h4>
+          <table class="tbl">
+            <thead><tr><th>Industry</th><th>Connect</th><th>Close</th><th>MRR</th></tr></thead>
+            <tbody>
+              <tr><td>Landscaping / Lawn</td><td>38%</td><td><span class="mini"><i style="width:52%"></i></span>52%</td><td>$720</td></tr>
+              <tr><td>HVAC</td><td>33%</td><td><span class="mini"><i style="width:44%"></i></span>44%</td><td>$540</td></tr>
+              <tr><td>Plumbing</td><td>31%</td><td><span class="mini"><i style="width:36%"></i></span>36%</td><td>$390</td></tr>
+              <tr><td>Cleaning</td><td>29%</td><td><span class="mini"><i style="width:28%"></i></span>28%</td><td>$280</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="addtilecard c4"><i data-lucide="plus"></i><span>Add a tile</span></div>
+
+  </div>
+
+  <div class="foot"></div>
+</div>
+<script>
+  lucide.createIcons();
+  function toggleEdit(){document.body.classList.toggle('editing');}
+  document.getElementById('editBtn').addEventListener('click',toggleEdit);
+  document.getElementById('doneBtn').addEventListener('click',toggleEdit);
+</script>
+</body>
+</html>

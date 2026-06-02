@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jobber AM Hub — Settings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="concept.css" />
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  .slayout{display:grid;grid-template-columns:228px 1fr;gap:16px;align-items:start}
+  .snav{padding:12px;position:sticky;top:20px}
+  .snav a{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:12px;text-decoration:none;color:var(--muted);font-weight:600;font-size:13.5px}
+  .snav a:hover{background:#FAFAF6}
+  .snav a.on{background:#F4F8EC;color:var(--navy)}
+  .snav a [data-lucide]{width:17px;height:17px}
+  .panel{padding:24px}
+  .panel h2{margin:0 0 4px;font-size:19px;font-weight:800;color:var(--navy)}
+  .panel .psub{color:var(--muted);font-size:12.5px;margin:0 0 18px}
+  .crow{display:flex;align-items:center;gap:14px;padding:15px 0;border-bottom:1px solid #F2F1EA}
+  .crow:last-child{border-bottom:0}
+  .clogo{width:42px;height:42px;border-radius:12px;background:#F4F5EC;display:grid;place-items:center;color:var(--navy);flex:none}
+  .cinfo{flex:1}.cinfo b{font-weight:700;font-size:14px;display:block}.cinfo span{color:var(--muted);font-size:12px}
+  .cstatus{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700}
+  .cstatus.ok{color:var(--green)}.cstatus.ok .dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+  .connect{border:1px solid var(--border);background:#fff;border-radius:10px;padding:8px 14px;font-weight:700;font-size:12.5px;color:var(--navy);cursor:pointer}
+  .seclab2{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:800;margin:24px 0 4px}
+  .frow{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid #F2F1EA}
+  .frow:last-child{border-bottom:0}
+  .frow .fl b{font-weight:700;font-size:13.5px;display:block}.frow .fl span{color:var(--muted);font-size:12px}
+  .frow input.t{width:130px;border:1px solid var(--border);border-radius:10px;padding:9px 12px;font:inherit;font-size:13px;text-align:right}
+  .panel.gap{margin-top:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="nav">
+    <div class="logo"><span class="mk">J</span> AM Hub</div>
+    <nav class="pillnav">
+      <a href="#">Hub</a><a href="#">Activity List</a><a href="#">Pipeline</a><a href="#">Performance</a><a href="#">Promos</a><a href="#">Development</a>
+    </nav>
+    <div class="navicons">
+      <div class="ic-btn on"><i data-lucide="settings"></i></div>
+      <div class="ic-btn"><i data-lucide="bell"></i><span class="nub"></span></div>
+      <div class="ava">ZF</div>
+    </div>
+  </div>
+
+  <div class="pagehead"><div><h1>Settings</h1></div></div>
+
+  <div class="slayout">
+
+    <!-- SECTION NAV -->
+    <div class="card snav">
+      <a class="on"><i data-lucide="plug"></i> Connections</a>
+      <a><i data-lucide="target"></i> Targets</a>
+      <a><i data-lucide="repeat"></i> Cadences</a>
+      <a><i data-lucide="bell"></i> Notifications</a>
+      <a><i data-lucide="sparkles"></i> AI script</a>
+      <a><i data-lucide="layout-grid"></i> Layout &amp; tiles</a>
+      <a><i data-lucide="moon"></i> Appearance</a>
+    </div>
+
+    <!-- CONNECTIONS PANEL -->
+    <div>
+      <div class="card panel">
+        <h2>Connections</h2>
+        <p class="psub">Link the tools the Hub reads from.</p>
+
+        <div class="crow"><div class="clogo"><i data-lucide="cloud"></i></div><div class="cinfo"><b>Salesforce</b><span>Accounts, opps, statuses, activity</span></div><div class="cstatus ok"><span class="dot"></span>Connected</div></div>
+        <div class="crow"><div class="clogo"><i data-lucide="wrench"></i></div><div class="cinfo"><b>Anchor</b><span>Plan, MRR, GSV, usage, JPay</span></div><div class="cstatus ok"><span class="dot"></span>Connected</div></div>
+        <div class="crow"><div class="clogo"><i data-lucide="mail"></i></div><div class="cinfo"><b>Gmail</b><span>Inbox · email drafts</span></div><div class="cstatus ok"><span class="dot"></span>Connected</div></div>
+        <div class="crow"><div class="clogo"><i data-lucide="calendar"></i></div><div class="cinfo"><b>Google Calendar</b><span>Schedule · busy blocks</span></div><div class="cstatus ok"><span class="dot"></span>Connected</div></div>
+        <div class="crow"><div class="clogo"><i data-lucide="slack"></i></div><div class="cinfo"><b>Slack</b><span>#announce-expansion, #war_room, #sales-critical</span></div><div class="cstatus ok"><span class="dot"></span>Connected</div></div>
+        <div class="crow"><div class="clogo"><i data-lucide="phone"></i></div><div class="cinfo"><b>Revenue.io</b><span>Dialer · recordings · SMS</span></div><div class="cstatus ok"><span class="dot"></span>Connected</div></div>
+        <div class="crow"><div class="clogo"><i data-lucide="bar-chart-3"></i></div><div class="cinfo"><b>Ambition</b><span>Activity score · talk time</span></div><button class="connect">Connect</button></div>
+        <div class="crow"><div class="clogo"><i data-lucide="calendar-clock"></i></div><div class="cinfo"><b>ChiliPiper</b><span>Booked calls / demos</span></div><button class="connect">Connect</button></div>
+        <div class="crow"><div class="clogo"><i data-lucide="message-circle"></i></div><div class="cinfo"><b>Intercom</b><span>Sales chats · status</span></div><button class="connect">Connect</button></div>
+        <div class="crow"><div class="clogo"><i data-lucide="cloud-rain"></i></div><div class="cinfo"><b>OpenWeather</b><span>Conditions by timezone</span></div><div class="cstatus ok"><span class="dot"></span>Connected</div></div>
+      </div>
+
+      <!-- TARGETS PANEL -->
+      <div class="card panel gap">
+        <h2>Targets</h2>
+        <p class="psub">Your monthly and daily goals.</p>
+        <div class="seclab2">Monthly</div>
+        <div class="frow"><div class="fl"><b>Total Expansion Revenue</b><span>Upgrade MRR + JPay PGPV</span></div><input class="t" value="$8,000" /></div>
+        <div class="frow"><div class="fl"><b>Upgrade MRR</b></div><input class="t" value="$2,500" /></div>
+        <div class="frow"><div class="fl"><b>JPay PGPV</b></div><input class="t" value="$57,000" /></div>
+        <div class="seclab2">Daily</div>
+        <div class="frow"><div class="fl"><b>Dials</b></div><input class="t" value="40" /></div>
+        <div class="frow"><div class="fl"><b>SMS</b></div><input class="t" value="20" /></div>
+        <div class="frow"><div class="fl"><b>Talk time (min)</b></div><input class="t" value="90" /></div>
+        <div class="frow"><div class="fl"><b>Opps created</b></div><input class="t" value="8" /></div>
+      </div>
+
+      <!-- NOTIFICATIONS PANEL -->
+      <div class="card panel gap">
+        <h2>Notifications</h2>
+        <p class="psub">What surfaces in your morning brief &amp; alerts.</p>
+        <div class="frow"><div class="fl"><b>New trials</b><span>Connect / Grow / Marketing Suite / AIR</span></div><span class="sw on"></span></div>
+        <div class="frow"><div class="fl"><b>Grace period clocks</b></div><span class="sw on"></span></div>
+        <div class="frow"><div class="fl"><b>#sales-critical leads routed to me</b></div><span class="sw on"></span></div>
+        <div class="frow"><div class="fl"><b>Outages (#war_room)</b></div><span class="sw on"></span></div>
+        <div class="frow"><div class="fl"><b>Rainy-day call prompts</b></div><span class="sw on"></span></div>
+        <div class="frow"><div class="fl"><b>Daily target digest</b></div><span class="sw"></span></div>
+      </div>
+    </div>
+
+  </div>
+  <div class="foot"></div>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

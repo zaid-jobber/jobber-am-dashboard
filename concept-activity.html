@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jobber AM Hub — Activity List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="concept.css" />
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  .layout{display:grid;grid-template-columns:.92fr 1.28fr;gap:16px;align-items:start}
+  .list{padding:8px 12px 12px;display:flex;flex-direction:column;max-height:calc(100vh - 160px)}
+  .listscroll{overflow-y:auto;padding-right:4px}
+  .listscroll::-webkit-scrollbar{width:8px}.listscroll::-webkit-scrollbar-thumb{background:#dcdbd2;border-radius:8px}
+  .bkt{display:flex;align-items:center;gap:8px;padding:14px 12px 7px;font-size:11px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);position:sticky;top:0;background:#fff;z-index:1}
+  .bkt .p{font-size:9px;font-weight:900;border-radius:6px;padding:2px 6px;background:var(--navy);color:#fff;letter-spacing:.5px}
+  .bkt .p.now{background:var(--green)}
+  .bkt .n{margin-left:auto;background:#F4F5EC;border-radius:20px;padding:2px 9px;color:var(--text)}
+  .lrow{display:flex;align-items:center;gap:11px;padding:11px;border-radius:16px;cursor:pointer;border:1px solid transparent;position:relative}
+  .lrow:hover{background:#FAFAF6}
+  .lrow.sel{background:#F4F8EC;border-color:#dfeebf}
+  .lrow.done{opacity:.5}.lrow.done b{text-decoration:line-through}
+  .pri{width:38px;height:38px;border-radius:11px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800;font-size:11px;flex:none;text-align:center;line-height:1.05}
+  .pri.time{background:var(--lime);color:var(--navy)}.pri.hot{background:#c0392b}
+  .pri [data-lucide]{width:17px;height:17px}.pri small{font-size:8px;font-weight:700;opacity:.85;display:block}
+  .info{flex:1;min-width:0}
+  .info b{font-weight:700;font-size:13.5px;display:block}
+  .info .meta{color:var(--muted);font-size:11px}
+  .info .reason{margin-top:4px;display:flex;gap:4px;flex-wrap:wrap}
+  .due{flex:none;color:var(--muted)}.due [data-lucide]{width:17px;height:17px}
+  .nowtag{position:absolute;top:-7px;left:12px;font-size:9px;font-weight:800;background:var(--green);color:#fff;border-radius:20px;padding:2px 8px;letter-spacing:.5px}
+  .sig{display:inline-block;font-size:9.5px;font-weight:700;padding:3px 7px;border-radius:20px;background:#F4F5EC;color:var(--muted)}
+  .sig.rain{background:#EAF3FB;color:#2b7bb9}.sig.grace{background:#FBEEE9;color:#c0392b}.sig.trial{background:#FFF4E2;color:#cf8a1f}.sig.nba{background:#EFEAFB;color:#7b3fa0}.sig.jpay{background:#E8F0FC;color:#2b6cb0}.sig.cad{background:#EAF6EE;color:var(--green)}.sig.opp{background:#E8F0FC;color:#2b6cb0}
+  .learnbanner{display:flex;align-items:center;gap:9px;margin:10px 8px 4px;padding:10px 13px;background:linear-gradient(120deg,#F4F8EC,#EEF7D6);border:1px solid #dfeebf;border-radius:14px;font-size:11.5px;color:#3f5a1e;font-weight:600}
+  .learnbanner [data-lucide]{width:16px;height:16px;color:var(--green)}
+  .rank{width:22px;text-align:center;font-size:12px;font-weight:800;color:var(--muted);flex:none}
+  .whyrank{margin-top:4px;font-size:10.5px;color:var(--green);font-weight:700}
+
+  .detail{padding:0;overflow:hidden}
+  .worklbar{display:flex;align-items:center;gap:12px;padding:13px 20px;background:#FAFAF6;border-bottom:1px solid var(--border)}
+  .worklbar .pos{font-size:12.5px;font-weight:700;color:var(--muted)}.worklbar .pos b{color:var(--navy)}
+  .navbtns{margin-left:auto;display:flex;gap:8px}
+  .nbtn{width:38px;height:38px;border-radius:11px;border:1px solid var(--border);background:#fff;cursor:pointer;color:var(--navy);display:grid;place-items:center}
+  .nbtn.next{width:auto;padding:0 16px;font-weight:800;font-size:13px;background:var(--navy);color:#fff;border-color:var(--navy);gap:6px}
+  .dbody{padding:22px}
+  .d-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+  .d-top .nm{font-size:23px;font-weight:800;letter-spacing:-.5px;color:var(--navy);line-height:1.1}
+  .d-top .who{color:var(--muted);font-size:12.5px;margin-top:4px}
+  .links{display:flex;gap:8px}.lnk{background:#F4F5EC;border:1px solid var(--border);border-radius:30px;padding:8px 13px;font-weight:700;font-size:12px;color:var(--navy);text-decoration:none;display:flex;gap:6px;align-items:center}
+  .lnk [data-lucide]{width:15px;height:15px}
+  .statuses{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .stat-badge{display:flex;align-items:center;gap:7px;border:1px solid var(--border);border-radius:12px;padding:7px 11px;font-size:12px}
+  .stat-badge .lab{font-size:9.5px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);font-weight:800}
+  .stat-badge b{font-weight:700;color:var(--navy)}
+  .stat-badge .d{width:8px;height:8px;border-radius:50%}.d.working{background:#cf8a1f}.d.on{background:var(--green)}
+  .why{margin:14px 0 4px;background:#F4F8EC;border:1px solid #dfeebf;border-radius:14px;padding:11px 14px;font-size:12.5px;color:#3f5a1e}.why b{color:#2f4717}
+  .insight{margin-top:14px;border:1px solid var(--border);border-radius:16px;overflow:hidden}
+  .insight .ih{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#FAFAF6;border-bottom:1px solid var(--border);font-size:12px;font-weight:800;color:var(--navy)}
+  .insight .ih .prob{margin-left:auto;font-size:11px;font-weight:800;color:#fff;background:var(--green);border-radius:20px;padding:3px 10px}
+  .grid6{display:grid;grid-template-columns:repeat(3,1fr)}
+  .gi{padding:10px 12px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .gi:nth-child(3n){border-right:0}
+  .gi .k{font-size:9.5px;text-transform:uppercase;letter-spacing:.3px;color:var(--muted);font-weight:700}
+  .gi .v{font-size:15px;font-weight:800;color:var(--navy);margin-top:2px}.gi .v.warn{color:#c0392b}.gi .v.ok{color:var(--green)}
+  .moretoggle{font-size:12px;font-weight:700;color:var(--green);background:#fff;border:0;cursor:pointer;padding:10px 14px;width:100%;text-align:left}
+  .cadence{margin-top:14px;border:1px solid #dfeebf;background:#F4F8EC;border-radius:16px;padding:13px 15px}
+  .cadence .ctop{display:flex;align-items:center;gap:10px}.cadence .ctop b{font-size:13.5px;color:var(--navy)}
+  .cadence .ctop .step{margin-left:auto;font-size:11px;font-weight:700;color:var(--green)}
+  .stepper{display:flex;align-items:center;gap:5px;margin-top:11px;flex-wrap:wrap}
+  .stepper .dot{min-width:30px;height:28px;padding:0 6px;border-radius:9px;display:flex;align-items:center;justify-content:center;gap:3px;border:1px solid var(--border);background:#fff;color:var(--muted)}
+  .stepper .dot [data-lucide]{width:13px;height:13px}
+  .stepper .dot.done{background:var(--green);color:#fff;border-color:var(--green)}
+  .stepper .dot.now{background:var(--lime);color:var(--navy);border-color:var(--lime);box-shadow:0 0 0 3px rgba(168,227,0,.25)}
+  .cadence .duenote{margin-top:10px;font-size:12.5px;color:#3f5a1e;font-weight:600}
+  .actions{display:flex;gap:9px;margin-top:16px;flex-wrap:wrap}
+  .act{flex:1;min-width:120px;border:1px solid var(--border);background:#fff;border-radius:14px;padding:12px;font-weight:800;font-size:13px;color:var(--navy);cursor:pointer;display:flex;gap:8px;align-items:center;justify-content:center}
+  .act [data-lucide]{width:16px;height:16px}
+  .act small{font-weight:600;color:var(--muted);font-size:10px}
+  .act.primary{background:var(--green);color:#fff;border-color:var(--green)}.act.primary small{color:rgba(255,255,255,.8)}
+  .script{border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:14px}
+  .script .sh{display:flex;align-items:center;gap:10px;padding:13px 16px;cursor:pointer;background:#FAFAF6}
+  .script .sh b{font-size:13.5px;font-weight:800;color:var(--navy)}
+  .script .sh .ai{font-size:10px;font-weight:800;color:var(--green);background:#EAF6EE;border-radius:20px;padding:3px 9px}
+  .script .sh .tw{margin-left:auto;color:var(--muted)}
+  .script .open{padding:14px 16px;border-top:1px solid var(--border)}
+  .askrow{display:flex;gap:8px}
+  .askrow input{flex:1;border:1px solid var(--border);border-radius:12px;padding:11px 13px;font:inherit;font-size:13px}
+  .gen{border:0;border-radius:12px;background:var(--green);color:#fff;font-weight:800;font-size:13px;padding:0 16px;cursor:pointer;white-space:nowrap}
+  .quick{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+  .q{font-size:11px;font-weight:700;border:1px solid var(--border);background:#fff;border-radius:30px;padding:6px 11px;color:var(--muted);cursor:pointer}
+  .generated{margin-top:12px;border-top:1px dashed var(--border);padding-top:4px}
+  .seg{padding:9px 0;border-top:1px dashed var(--border)}.seg:first-child{border-top:0}
+  .seg .lbl{font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--green)}
+  .seg p{margin:4px 0 0;font-size:13px;line-height:1.5}.seg p .hi{background:#EEF7D6;border-radius:5px;padding:0 4px;font-weight:600}
+  .sfact{margin-top:14px;border:1px solid var(--border);border-radius:16px;padding:13px 15px;background:#FCFCFA}
+  .sfact .lh{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);margin-bottom:9px}
+  .sfa{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:12.5px}
+  .sfa .ico{width:26px;height:26px;border-radius:8px;background:#F4F5EC;display:grid;place-items:center;color:var(--navy);flex:none}
+  .sfa .ico [data-lucide]{width:14px;height:14px}
+  .sfa .t{flex:1}.sfa .t b{font-weight:700}.sfa .when{color:var(--muted);font-size:11px}
+  .promo-cost{margin-top:14px;border:1px solid #dfeebf;background:#F4F8EC;border-radius:16px;padding:13px 15px}
+  .pc-head{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;color:var(--navy)}
+  .pc-head [data-lucide]{width:16px;height:16px;color:var(--green)}
+  .pc-head .pc-tag{margin-left:auto;font-size:10.5px;font-weight:800;background:var(--lime);color:var(--navy);border-radius:20px;padding:3px 9px}
+  .pc-rows{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+  .pc-r{display:flex;align-items:baseline;justify-content:space-between;font-size:12.5px}
+  .pc-r .pl{color:var(--text);font-weight:600}
+  .pc-r .pv b{font-size:14px;font-weight:800;color:var(--navy)}
+  .pc-r .pv small{color:var(--muted);font-size:11px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="nav">
+    <div class="logo"><span class="mk">J</span> AM Hub</div>
+    <nav class="pillnav">
+      <a href="#">Hub</a><a class="active" href="#">Activity List</a><a href="#">Pipeline</a><a href="#">Performance</a><a href="#">Promos</a><a href="#">Development</a>
+    </nav>
+    <div class="navicons">
+      <div class="ic-btn" id="editBtn" title="Customize"><i data-lucide="layout-grid"></i></div>
+      <div class="ic-btn"><i data-lucide="settings"></i></div>
+      <div class="ic-btn"><i data-lucide="bell"></i><span class="nub"></span></div>
+      <div class="ava">ZF</div>
+    </div>
+  </div>
+
+  <div class="pagehead">
+    <div><h1>Activity List</h1><p>32 accounts · ranked for you</p></div>
+    <div class="controls"><div class="chip on"><i data-lucide="sparkles"></i> Ranked for me</div><div class="chip"><i data-lucide="clock"></i> By time</div><div class="chip"><i data-lucide="cloud-rain"></i> Weather</div></div>
+  </div>
+
+  <div class="editbar">
+    <span class="et"><i data-lucide="sliders-horizontal"></i> Customize list</span>
+    <span class="hint">Reorder columns, show/hide fields</span>
+    <button class="done" id="doneBtn">Done</button>
+  </div>
+
+  <div class="card" style="display:flex;align-items:center;gap:13px;padding:13px 18px;margin-bottom:16px;background:linear-gradient(120deg,#F4F8EC,#EEF7D6);border-color:#dfeebf">
+    <div style="width:36px;height:36px;border-radius:11px;background:var(--lime);color:var(--navy);display:grid;place-items:center;flex:none"><i data-lucide="zap"></i></div>
+    <div style="font-size:13px;color:#3f5a1e;font-weight:600"><b style="color:var(--navy);font-weight:800">May SPIF active</b> — JPay enablements (4 to go). JPay-eligible accounts boosted up your list.</div>
+    <b class="num" style="margin-left:auto;color:var(--navy);font-weight:800">6/10</b>
+  </div>
+
+  <div class="layout">
+
+    <!-- LIST -->
+    <div class="card list">
+      <div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div>
+      <div class="listscroll">
+
+        <div class="bkt"><span class="p now">Reach now</span> Trials &amp; time-critical <span class="n">4</span></div>
+        <div class="lrow sel"><span class="nowtag">NOW</span><div class="pri hot"><i data-lucide="chevron-up"></i></div><div class="info"><b>Apex HVAC</b><div class="meta">Grow trial · MT</div><div class="reason"><span class="sig trial">Trial ends 2d</span><span class="sig cad">Step due</span></div></div><div class="due"><i data-lucide="phone"></i></div></div>
+        <div class="lrow"><div class="pri hot"><i data-lucide="chevron-up"></i></div><div class="info"><b>Cedar Cleaning</b><div class="meta">Connect trial · PT</div><div class="reason"><span class="sig trial">New trial — enroll</span></div></div><div class="due"><i data-lucide="mail"></i></div></div>
+        <div class="lrow"><div class="pri time">1:30<small>PM</small></div><div class="info"><b>Peak Plumbing</b><div class="meta">Grow · PT</div><div class="reason"><span class="sig">Scheduled · ChiliPiper</span></div></div><div class="due"><i data-lucide="phone"></i></div></div>
+        <div class="lrow"><div class="pri hot"><i data-lucide="alert-triangle"></i></div><div class="info"><b>Greenline Landscaping</b><div class="meta">Connect · ET</div><div class="reason"><span class="sig grace">Grace 5d</span><span class="sig rain">Rain ET</span></div></div><div class="due"><i data-lucide="phone"></i></div></div>
+
+        <div class="learnbanner"><i data-lucide="sparkles"></i> Ranked for you — tuned to your wins &amp; best-call times</div>
+        <div class="bkt"><span class="p">Your list</span> Ranked <span class="n">28</span></div>
+
+        <div class="lrow"><div class="rank">1</div><div class="info"><b>Lakeside Lawn Care</b><div class="meta">Connect · CT · Quoter</div><div class="reason"><span class="sig">Advanced Quoting</span><span class="sig rain">Rain CT</span></div><div class="whyrank">↑ you close Grow + Landscaping at 52%</div></div><div class="due"><i data-lucide="phone"></i></div></div>
+        <div class="lrow"><div class="rank">2</div><div class="info"><b>Northside Cleaning</b><div class="meta">Connect · ET · cadence due</div><div class="reason"><span class="sig nba">NBA → Grow</span><span class="sig cad">3/13</span></div><div class="whyrank">↑ best-call window now (ET 8–10a)</div></div><div class="due"><i data-lucide="phone"></i></div></div>
+        <div class="lrow"><div class="rank">3</div><div class="info"><b>Summit Roofing</b><div class="meta">Grow opp · MT · Evaluating</div><div class="reason"><span class="sig opp">Follow-up due</span></div></div><div class="due"><i data-lucide="phone"></i></div></div>
+        <div class="lrow"><div class="rank">4</div><div class="info"><b>Coastal Painting</b><div class="meta">Grow · AT · JPay eligible</div><div class="reason"><span class="sig jpay">JPay · pGPV $48k</span></div></div><div class="due"><i data-lucide="message-square"></i></div></div>
+        <div class="lrow"><div class="rank">5</div><div class="info"><b>Maple Grove HVAC</b><div class="meta">Grow · MT · NBA 71%</div><div class="reason"><span class="sig nba">NBA → Plus</span><span class="sig cad">1/13</span></div></div><div class="due"><i data-lucide="mail"></i></div></div>
+        <div class="lrow"><div class="rank">6</div><div class="info"><b>Hometown Plumbing</b><div class="meta">Core · ET · new</div><div class="reason"><span class="sig">New · intro</span></div><div class="whyrank">↓ Core→Connect closes slower for you</div></div><div class="due"><i data-lucide="phone"></i></div></div>
+
+      </div>
+    </div>
+
+    <!-- DETAIL -->
+    <div class="card detail">
+      <div class="tctl"><span class="grip"><i data-lucide="grip-vertical"></i></span><button class="rm"><i data-lucide="x"></i></button></div>
+      <div class="worklbar">
+        <div class="pos">Account <b>4</b> of 32 · <b>28</b> left</div>
+        <div class="navbtns"><button class="nbtn"><i data-lucide="chevron-left"></i></button><button class="nbtn"><i data-lucide="chevron-right"></i></button><button class="nbtn next">Done · next</button></div>
+      </div>
+      <div class="dbody">
+        <div class="d-top">
+          <div>
+            <div class="nm">Apex HVAC</div>
+            <div class="who">Marcus Reed · (480) 555-0142 · Mesa, AZ · MT · HVAC</div>
+            <div class="statuses">
+              <div class="stat-badge"><span class="d working"></span><span class="lab">Upgrade</span><b>Working</b></div>
+              <div class="stat-badge"><span class="d on"></span><span class="lab">JPay</span><b>On by default</b></div>
+            </div>
+          </div>
+          <div class="links"><a class="lnk" href="#"><i data-lucide="cloud"></i> Salesforce</a><a class="lnk" href="#"><i data-lucide="wrench"></i> Anchor</a></div>
+        </div>
+
+        <div class="why"><b>#1 · Reach now:</b> Grow trial ends in 2 days. Trials jump the queue — reach &amp; convert before it lapses.</div>
+
+        <div class="insight">
+          <div class="ih"><i data-lucide="trending-up"></i> Plan Upgrade Insight <span class="prob">73%</span></div>
+          <div class="grid6">
+            <div class="gi"><div class="k">Extra users</div><div class="v warn">5 / 5</div></div>
+            <div class="gi"><div class="k">Quotes 30d</div><div class="v">41</div></div>
+            <div class="gi"><div class="k">Invoices 30d</div><div class="v">68</div></div>
+            <div class="gi"><div class="k">Active SMS 60d</div><div class="v ok">52</div></div>
+            <div class="gi"><div class="k">Active email 60d</div><div class="v">37</div></div>
+            <div class="gi"><div class="k">Integrations</div><div class="v">3</div></div>
+          </div>
+          <button class="moretoggle">JPay insight &amp; more — GSV $612k · Avg invoice $1,240 · pGPV $52k</button>
+        </div>
+
+        <!-- ELIGIBLE PROMO + UPGRADE COST -->
+        <div class="promo-cost">
+          <div class="pc-head"><i data-lucide="ticket-percent"></i> Eligible promo <span class="pc-tag">30% × 3 months</span></div>
+          <div class="pc-rows">
+            <div class="pc-r"><span class="pl">Convert Grow trial</span><span class="pv"><b>~$244</b>/mo <small>was $349 ACBM · 3mo</small></span></div>
+            <div class="pc-r"><span class="pl">Grow → Plus</span><span class="pv"><b>~$419</b>/mo <small>was $599 ACBM</small></span></div>
+            <div class="pc-r"><span class="pl">+ JPay (SPIF)</span><span class="pv"><b>Two-For</b> <small>+ free card readers</small></span></div>
+          </div>
+        </div>
+
+        <div class="cadence">
+          <div class="ctop"><b>EXP - Grow Trial</b><span class="step">Step 4 of 11</span></div>
+          <div class="stepper">
+            <div class="dot done"><i data-lucide="phone"></i><i data-lucide="message-square"></i></div>
+            <div class="dot done"><i data-lucide="mail"></i></div>
+            <div class="dot done"><i data-lucide="phone"></i><i data-lucide="mail"></i></div>
+            <div class="dot now"><i data-lucide="phone"></i></div>
+            <div class="dot"><i data-lucide="message-square"></i></div>
+            <div class="dot"><i data-lucide="phone"></i><i data-lucide="mail"></i></div>
+            <div class="dot"><i data-lucide="message-square"></i></div>
+            <div class="dot"><i data-lucide="phone"></i></div>
+          </div>
+          <div class="duenote">Call due today (Day 5) · trial ends in 2 days</div>
+        </div>
+
+        <div class="actions">
+          <button class="act primary"><i data-lucide="phone"></i> Dial<small>Revenue.io</small></button>
+          <button class="act"><i data-lucide="mail"></i> Email<small>Gmail draft</small></button>
+          <button class="act"><i data-lucide="message-square"></i> Text<small>copy</small></button>
+        </div>
+
+        <div class="script">
+          <div class="sh"><b>Call script</b><span class="ai">AI</span><span class="tw"><i data-lucide="chevron-down"></i></span></div>
+          <div class="open">
+            <div class="askrow"><input value="Convert their Grow trial before it ends" /><button class="gen">Generate</button></div>
+            <div class="quick"><span class="q">Trial conversion</span><span class="q">Connect→Grow</span><span class="q">JPay</span><span class="q">Check-in</span></div>
+            <div class="generated">
+              <div class="seg"><div class="lbl">P.L.A.N.</div><p>"Hi Marcus, it's Zaid from Jobber — I'm your Account Manager. I saw your <span class="hi">Grow trial wraps up in 2 days</span> and you're using it heavily. Got 10 minutes?"</p></div>
+              <div class="seg"><div class="lbl">Discovery</div><p>Route: <span class="hi">streamline vs revenue?</span> Two-Way SMS usage high → probe missed-call pain. 11–14 questions.</p></div>
+              <div class="seg"><div class="lbl">Solution → close</div><p>Lead <span class="hi">Two-Way SMS</span> + <span class="hi">Advanced Quoting</span>. Push annual/ACBM; back-pocket <span class="hi">30%×3mo</span> or <span class="hi">10%×12mo</span>.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sfact">
+          <div class="lh">Recent activity · from Salesforce</div>
+          <div class="sfa"><span class="ico"><i data-lucide="phone"></i></span><div class="t"><b>Call Conversation</b> — agreed to talk today</div><span class="when">2d</span></div>
+          <div class="sfa"><span class="ico"><i data-lucide="mail"></i></span><div class="t"><b>Email</b> — trial recap</div><span class="when">3d</span></div>
+          <div class="sfa"><span class="ico"><i data-lucide="message-square"></i></span><div class="t"><b>SMS</b> — value tip</div><span class="when">5d</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"></div>
+</div>
+<script>
+  lucide.createIcons();
+  function toggleEdit(){document.body.classList.toggle('editing');}
+  document.getElementById('editBtn').addEventListener('click',toggleEdit);
+  document.getElementById('doneBtn').addEventListener('click',toggleEdit);
+</script>
+</body>
+</html>
