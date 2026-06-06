@@ -7,13 +7,22 @@ import {
   BookOpen, FileText, Download, ExternalLink, FileCheck, Layers,
 } from "lucide-react";
 
+// The Integrations Hub is its own standalone app (single source of truth) that
+// this tab embeds. By default it's served from /integrations/ (run
+// `npm run build:integrations` to copy the standalone's build into public/).
+// Override with VITE_INTEGRATIONS_URL to point at a hosted build, or at the
+// standalone's dev server (http://localhost:5174) for live-reload development.
+// Explicit index.html avoids Vite's dev SPA-fallback (a bare /integrations/
+// would return the AM Hub shell instead of the embedded app).
+const INTEGRATIONS_URL = import.meta.env.VITE_INTEGRATIONS_URL || "/integrations/index.html";
+
 const COLLATERAL_URL = "https://jobber.atlassian.net/wiki/spaces/EXP/pages/4697948224/Marketing+Collateral+SP+Content";
 const PROOF_HUB_URL = "https://script.google.com/a/macros/getjobber.com/s/AKfycbyMyCquAE5UYgoF-Y2iQ6MFeQeaKZzjm6cpRbiuJi2LcW51sntVylP_iIRYjsXdly_t/exec";
 const QUOTE_FOLDER_ID = "1y2l-1AVTkJ5_NoVpRd5ownSuh3JmYHYj";
 const QUOTE_FOLDER_EMBED = `https://drive.google.com/embeddedfolderview?id=${QUOTE_FOLDER_ID}#grid`;
 const QUOTE_FOLDER_URL = `https://drive.google.com/drive/folders/${QUOTE_FOLDER_ID}`;
 
-const TABS = ["Promos", "Marketing Collateral", "Quote Templates", "Proof Hub"];
+const TABS = ["Promos", "Integrations", "Marketing Collateral", "Quote Templates", "Proof Hub"];
 
 // --- Plan brochures (the main collateral) ---
 const BROCHURES = [
@@ -73,6 +82,18 @@ export default function Promos() {
           <div className="calc-placeholder">
             <Calculator size={26} />
             <div><b>Promo calculator</b><p>Being built separately — it'll be embedded here once it's ready.</p></div>
+          </div>
+        </>
+      )}
+
+      {tab === "Integrations" && (
+        <>
+          <div className="res-head" style={{ marginBottom: 12 }}>
+            <div className="seclab2" style={{ margin: 0 }}>3rd-party apps & integrations · search what the SP needs</div>
+            <a className="res-open" href={INTEGRATIONS_URL} target="_blank" rel="noreferrer"><ExternalLink size={14} /> Open full screen</a>
+          </div>
+          <div className="proofhub">
+            <iframe title="Integrations Hub" src={INTEGRATIONS_URL} />
           </div>
         </>
       )}
