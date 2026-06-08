@@ -10,8 +10,9 @@ import {
 // The Integrations Hub is its own standalone app, deployed as a Google Apps
 // Script web app (access limited to getjobber.com) so the partnership data stays
 // internal — this repo only references the URL, never the data.
-// Paste the deployed /exec URL below (or set VITE_INTEGRATIONS_URL).
-const INTEGRATIONS_URL = import.meta.env.VITE_INTEGRATIONS_URL || "";
+// Published Apps Script web app (/exec). Override with VITE_INTEGRATIONS_URL.
+const INTEGRATIONS_URL = import.meta.env.VITE_INTEGRATIONS_URL
+  || "https://script.google.com/a/macros/getjobber.com/s/AKfycbx8ThEgL3rGCKGjziLa3SHDCdLQGSL451lIh52Yr-KncwM8s4RJGd61XTYFxBhU3AOX/exec";
 
 const COLLATERAL_URL = "https://jobber.atlassian.net/wiki/spaces/EXP/pages/4697948224/Marketing+Collateral+SP+Content";
 const PROOF_HUB_URL = "https://script.google.com/a/macros/getjobber.com/s/AKfycbyMyCquAE5UYgoF-Y2iQ6MFeQeaKZzjm6cpRbiuJi2LcW51sntVylP_iIRYjsXdly_t/exec";
